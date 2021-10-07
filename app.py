@@ -1,14 +1,17 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
+
 app = Flask(__name__)
 
 #---------------------------------RUTAS ARBOL PRINCIPAL----------------------------------
-@app.route('/', methods=["GET"])
+@app.route('/', methods=["GET","POST"])
 def index():
+    if request.method == "POST":
+      return render_template("/RAIZ/reservas.html")
     return render_template('/RAIZ/index.html')
 
-@app.route('/habitaciones_reservas', methods=["GET"])
+@app.route('/reservas', methods=["GET","POST"])
 def habitaciones_reservas():
-    return render_template('/RAIZ/habitaciones_reservas.html')
+    return render_template('/RAIZ/reservas.html')
 
 @app.route('/quienes_somos', methods=["GET"])
 def quienes_somos():
@@ -28,15 +31,17 @@ def terminos_y_condiciones():
 def registro():
     return render_template('/USUARIO/registro.html')
 
-@app.route('/habitacion/', methods=["GET"])
+@app.route('/habitacion/<string:id_habitacion>', methods=["GET"])
 def habitacion():
     return render_template('/USUARIO/habitacion.html')
 
 @app.route('/login', methods=["GET","POST"])
 def login():
+    if request.method == "POST":
+      return redirect("/RAIZ/index")
     return render_template('/USUARIO/login.html')
 
-@app.route('/perfil', methods=["GET"])
+@app.route('/perfil/<string:id_usuario>', methods=["GET"])
 def perfil():
     return render_template('/USUARIO/perfil.html')
 
@@ -83,5 +88,5 @@ def superadmin_profile():
     return render_template('/SUPERADMIN/superadmin_profile.html')
 
 if __name__=='__main__':
-    app.run(debug=True)
-    # app.run(host='0.0.0.0', port=5001, debug=True)
+    # app.run(debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
