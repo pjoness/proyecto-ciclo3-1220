@@ -10,7 +10,7 @@ def index():
     return render_template('/RAIZ/index.html')
 
 @app.route('/reservas', methods=["GET","POST"])
-def habitaciones_reservas():
+def reservas():
     return render_template('/RAIZ/reservas.html')
 
 @app.route('/quienes_somos', methods=["GET"])
