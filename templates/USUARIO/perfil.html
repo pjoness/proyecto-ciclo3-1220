@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "/base.html" %}
 
-    <title>PERFIL</title>
+{% block titlep %} PERFIL {% endblock %}
+{% block titulo %} NOMBRE HOTEL {% endblock %}
 
-</head>
-<body>
+{% block contenido %}
 
-    <h1>NOMBRE HOTEL</h1>
+    <h1>Bienvenido {{ name }}</h1>
 
-    <a href="/">INICIO |</a>
-    <a href="/habitaciones_reservas">HABITACIONES - RESERVAS |</a>
-    <a href="/quienes_somos">¿QUIENES SOMOS? |</a>
-    <a href="/politicas_de_privacidad"> POLITICAS DE PRIVACIDAD |</a>
-    <a href="/terminos_y_condiciones">TERMINOS Y CONDICIONES</a>
-
-</body>
-</html>
+{% endblock %}

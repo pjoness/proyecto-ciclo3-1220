@@ -1,0 +1,19 @@
+{% extends "/base.html" %}
+
+{% block titlep %} CALIFICAR {% endblock %}
+{% block titulo %} NOMBRE HOTEL {% endblock %}
+
+{% block contenido %}
+
+<h1>Bienvenido {{ id_user }}</h1>
+<P>Califica la habitacion {{ id_room }}:</P>
+
+<form action="/" method="post">   <!--REDIRECCIONAR  A PERFIL-->
+    {{ form.hidden_tag() }} 
+    <p>
+        {{ form.comentario.label }}<br>
+        {{ form.comentario(size=30)}}<br>
+    </p>
+    <p>{{ form.enviar() }}</p>
+</form>
+{% endblock %}
