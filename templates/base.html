@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <title>    {% block titlep %} {% endblock %}</title>
+
+</head>
+<body>
+
+    <h1>{% block titulo %} {% endblock %}</h1>
+
+    <a href="/">INICIO |</a>
+    <a href="/habitacion/1">HABITACIONES |</a>
+    <a href="/reservas">RESERVAS |</a>
+    <a href="/quienes_somos">¿QUIENES SOMOS? |</a>
+    <a href="/politicas_de_privacidad"> POLITICAS DE PRIVACIDAD |</a>
+    <a href="/terminos_y_condiciones">TERMINOS Y CONDICIONES</a>
+
+    <hr>
+
+    {% block contenido %}
+    {% endblock %}
+        
+</body>
+</html>
