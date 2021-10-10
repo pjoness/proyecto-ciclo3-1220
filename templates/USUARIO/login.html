@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "/base.html" %}
 
-    <title>INICIAR SESION</title>
+{% block titlep %} INICIAR SESION {% endblock %}
+{% block titulo %} NOMBRE HOTEL {% endblock %}
 
-</head>
-<body>
+{% block contenido %}
 
-    <h1>NOMBRE HOTEL</h1>
+<h1>Iniciar Sesión</h1>
+    <form action="/" method="post">
+        {{ form.hidden_tag() }} 
+        <p>
+            {{ form.usuario.label }}<br>
+            {{ form.usuario(size=30)}}<br>
+        </p>
+        <p>
+            {{ form.contraseña.label }}<br>
+            {{ form.contraseña(size=30) }}<br>
+        </p>
+        <p>{{ form.recordar() }} {{ form.recordar.label }}</p>
+        <p>{{ form.enviar() }}</p>
+    </form>
 
-    <a href="/">INICIO |</a>
-    <a href="/habitaciones_reservas">HABITACIONES - RESERVAS |</a>
-    <a href="/quienes_somos">¿QUIENES SOMOS? |</a>
-    <a href="/politicas_de_privacidad"> POLITICAS DE PRIVACIDAD |</a>
-    <a href="/terminos_y_condiciones">TERMINOS Y CONDICIONES</a>
-
-</body>
-</html>
+{% endblock %}
