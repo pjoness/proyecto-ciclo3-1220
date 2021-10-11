@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
-import random
+# from forms import RegistroForm
 
 app = Flask(__name__)
 
@@ -8,20 +8,21 @@ def index():
     if request.method == "POST":
         return render_template('/RAIZ/reservas.html')
     else:
-        iframe = random.choice(['header.html','footer.html'])
-        return render_template('index.html', iframe=iframe)
+        return render_template('index.html')
 
 @app.route('/reservas', methods=["GET","POST"])
 def reservas():
     return render_template('/RAIZ/reservas.html')
 
-@app.route('/habitacion/<string:id_habitacion>', methods=["GET"])
-def habitacion(id_habitacion):
-    return render_template('/USUARIO/habitacion.html')
-
 @app.route('/registro', methods=["GET","POST"])
 def registro():
+    # forma = RegistroForm()
     if request.method == "POST":
+        nombre = forma.nombre.data
+        apellido = forma.apellido.data
+        correo = forma.correo.data
+        usuario = forma.usuario.data
+        contrasena = forma.contrasena.data
         return render_template('/USUARIO/login.html')
     else:
         return render_template('registro.html')
@@ -32,18 +33,21 @@ def login():
         return render_template('/RAIZ/index.html')
     else:
         return render_template('/USUARIO/login.html')
-    
+
+@app.route('/habitacion/<string:id_habitacion>', methods=["GET"])
+def habitacion(id_habitacion):
+    return render_template('/USUARIO/habitacion.html')
 
 @app.route('/perfil/<string:id_usuario>', methods=["GET"]) 
 def perfil(id_usuario):
     return render_template('/USUARIO/perfil.html')
 
-@app.route('/calificar/<string:id_usuario>/<string:id_habitacion>',methods=["GET","POST"])
-def calificar(id_usuario,id_habitacion):
+@app.route('/calificar',methods=["GET","POST"])
+def calificar():
     if request.method == "POST":
         return render_template('/USUARIO/perfil.html')
     else:
-        return render_template('/USUARIO/calificar.html')
+        return render_template('calificar.html')
 
 """@app.route('/perfil_reservas', methods=["GET"])
 def perfil_reservas():

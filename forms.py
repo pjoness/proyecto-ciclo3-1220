@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, TextAreaField,
-IntField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField#, DateField, TextAreaField,
+#IntField
 from wtforms.validators import DataRequired, Email
 
 class RegistroForm(FlaskForm):
@@ -12,7 +12,7 @@ class RegistroForm(FlaskForm):
 
     usuario = StringField('usuario', validators=[DataRequired(message='No dejar vacío, completar')])
 
-    contraseña = PasswordField('contraseña', validators=[DataRequired(message='No dejar vacío, completar')])
+    contrasena = PasswordField('contraseña', validators=[DataRequired(message='No dejar vacío, completar')])
 
     crear_cuenta = SubmitField('crear_cuenta')
 
