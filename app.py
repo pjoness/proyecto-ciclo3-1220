@@ -4,9 +4,11 @@ import os
 
 app = Flask(__name__)
 
-app.secret_key= os.urandom(32)
+app.secret_key = os.urandom(32)
 
 correos = ['aaa@gmail.com','bbb@gmail.com','ccc@gmail.com']
+
+correos_admin = ['paul@gmail.com']
 
 @app.route('/', methods=["GET","POST"])
 def index():
@@ -21,13 +23,13 @@ def reservas():
 
 @app.route('/registro', methods=["GET","POST"])
 def registro():
-    forma = RegistroForm()
+    # forma = RegistroForm()
     if request.method == "POST":
-        nombre = forma.nombre.data
-        apellido = forma.apellido.data
-        correo = forma.correo.data
-        usuario = forma.usuario.data
-        contrasena = forma.contrasena.data
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        correo = request.form['correo']
+        usuario = request.form['usuario']
+        password = request.form['password']
         return render_template('login.html')
     else:
         return render_template('registro.html')
@@ -37,9 +39,11 @@ def login():
     # form = LoginForm()
     if request.method == "POST":
         correo = request.form['correo']
-        # contraseña = request.form['contraseña']
+        password = request.form['password']
         if correo in correos:
             return render_template('index.html')
+        elif correo in correos_admin:
+            return render_template('admin_home.html')
         else:
             flash('Correo invalido')
             return render_template('login.html')
