@@ -1,7 +1,10 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
-# from forms import RegistroForm
+from forms import RegistroForm
+import os
 
 app = Flask(__name__)
+
+app.secret_key= os.urandom(32)
 
 @app.route('/', methods=["GET","POST"])
 def index():
@@ -16,14 +19,15 @@ def reservas():
 
 @app.route('/registro', methods=["GET","POST"])
 def registro():
-    # forma = RegistroForm()
+    forma = RegistroForm()
     if request.method == "POST":
         nombre = forma.nombre.data
         apellido = forma.apellido.data
         correo = forma.correo.data
         usuario = forma.usuario.data
         contrasena = forma.contrasena.data
-        return render_template('/USUARIO/login.html')
+        print(nombre, apellido, correo, usuario, contrasena)
+        return render_template('registro.html')
     else:
         return render_template('registro.html')
 

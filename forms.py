@@ -1,14 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField#, DateField, TextAreaField,
-#IntField
-from wtforms.validators import DataRequired, Email
+from wtforms import StringField, PasswordField, BooleanField, TextAreaField, DateField, SubmitField
+from wtforms.validators import DataRequired#, Email
 
 class RegistroForm(FlaskForm):
     nombre = StringField('nombre', validators=[DataRequired(message='No dejar vacío, completar')])
 
     apellido = StringField('apellido', validators=[DataRequired(message='No dejar vacío, completar')])
 
-    correo = StringField('correo', validators=[DataRequired(message='No dejar vacío, completar'), Email()])
+    correo = StringField('correo', validators=[DataRequired(message='No dejar vacío, completar')])
 
     usuario = StringField('usuario', validators=[DataRequired(message='No dejar vacío, completar')])
 
@@ -24,9 +23,9 @@ class LoginForm(FlaskForm):
     iniciar_sesion = SubmitField('iniciar_sesion')
 
 class BuscarForm(FlaskForm):
-    personas = IntField('personas', DataRequired())
+    personas = StringField('personas', DataRequired())
 
-    habitaciones = IntField('habitaciones', DataRequired())
+    habitaciones = StringField('habitaciones', DataRequired())
 
     fecha_entrada = DateField('fecha_entrada', DataRequired())
 
@@ -35,7 +34,7 @@ class BuscarForm(FlaskForm):
     buscar = SubmitField('buscar')
 
 class CalificacionForm(FlaskForm):
-    estrellas = IntField('estrellas', DataRequired())
+    estrellas = StringField('estrellas', DataRequired())
 
     mensaje = TextAreaField('mensaje')
 
@@ -63,7 +62,7 @@ class Usuarios(FlaskForm):
 
     apellido = StringField('apellido', validators=[DataRequired(message='No dejar vacío, completar')])
 
-    correo = StringField('correo', validators=[DataRequired(message='No dejar vacío, completar'), Email()])
+    correo = StringField('correo', validators=[DataRequired(message='No dejar vacío, completar')])
 
     usuario = StringField('usuario', validators=[DataRequired(message='No dejar vacío, completar')])
 
