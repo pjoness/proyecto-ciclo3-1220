@@ -73,11 +73,11 @@ class Usuarios(FlaskForm):
     eliminar = SubmitField('eliminar')
 
 class Habitaciones(FlaskForm):
-    id_habitacion = StringField('id_habitacion')
+    id_habitacion = StringField('id_habitacion', validators=[DataRequired(message='No dejar vacío, completar')])
 
-    tipo_habitacion = StringField('tipo_habitacion', DataRequired())
+    tipo_habitacion = StringField('tipo_habitacion', validators=[DataRequired(message='No dejar vacío, completar')])
 
-    descripcion = TextAreaField('descripcion', DataRequired())
+    descripcion = TextAreaField('descripcion', validators=[DataRequired(message='No dejar vacío, completar')])
 
     crear = SubmitField('crear')
     editar = SubmitField('editar')

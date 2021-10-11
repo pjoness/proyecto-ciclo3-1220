@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
-from forms import RegistroForm, LoginForm
+from forms import RegistroForm, LoginForm, Habitaciones
 import os
 
 app = Flask(__name__)
@@ -28,21 +28,21 @@ def registro():
         correo = forma.correo.data
         usuario = forma.usuario.data
         contrasena = forma.contrasena.data
-        print(nombre, apellido, correo, usuario, contrasena)
-        return render_template('registro.html')
+        return render_template('login.html')
     else:
         return render_template('registro.html')
 
 @app.route('/login', methods=["GET","POST"])
 def login():
-    form = LoginForm()
+    # form = LoginForm()
     if request.method == "POST":
-        correo = form.correo.data
-        contraseña = form.contraseña.data
+        correo = request.form['correo']
+        # contraseña = request.form['contraseña']
         if correo in correos:
-            return render_template('index.html', form=form)
+            return render_template('index.html')
         else:
             flash('Correo invalido')
+            return render_template('login.html')
     else:
         return render_template('login.html')
 
@@ -68,6 +68,17 @@ def admin_usuarios():
 @app.route('/admin_habitaciones', methods=["GET","POST"])
 def admin_habitaciones():
     return render_template('/ADMIN/admin_geshabitacion.html')
+
+@app.route('/agregar_habitacion', methods=["GET","POST"])
+def agregar_habitacion():
+    form = Habitaciones()
+    if request.method == "POST":
+        id_habitacion = form.id_habitacion.data
+        tipo_habitacion = form.tipo_habitacion.data
+        descripcion = form.descripcion.data
+        return render_template('index.html')
+    else:
+        return render_template('agregar_habitacion.html', form=form)
 
 @app.route('/admin_comentarios', methods=["GET","POST"])
 def admin_comentarios():
