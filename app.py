@@ -1,10 +1,12 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
-from forms import RegistroForm
+from forms import RegistroForm, LoginForm
 import os
 
 app = Flask(__name__)
 
 app.secret_key= os.urandom(32)
+
+correos = ['aaa@gmail.com','bbb@gmail.com','ccc@gmail.com']
 
 @app.route('/', methods=["GET","POST"])
 def index():
@@ -33,16 +35,22 @@ def registro():
 
 @app.route('/login', methods=["GET","POST"])
 def login():
+    form = LoginForm()
     if request.method == "POST":
-        return render_template('/RAIZ/index.html')
+        correo = form.correo.data
+        contraseña = form.contraseña.data
+        if correo in correos:
+            return render_template('index.html', form=form)
+        else:
+            flash('Correo invalido')
     else:
-        return render_template('/USUARIO/login.html')
+        return render_template('login.html')
 
 @app.route('/habitacion/<string:id_habitacion>', methods=["GET"])
 def habitacion(id_habitacion):
     return render_template('/USUARIO/habitacion.html')
 
-@app.route('/perfil/<string:id_usuario>', methods=["GET"]) 
+@app.route('/perfil/<string:id_usuario>', methods=["GET"])
 def perfil(id_usuario):
     return render_template('/USUARIO/perfil.html')
 
@@ -52,10 +60,6 @@ def calificar():
         return render_template('/USUARIO/perfil.html')
     else:
         return render_template('calificar.html')
-
-"""@app.route('/perfil_reservas', methods=["GET"])
-def perfil_reservas():
-    return render_template('/USUARIO/perfil_reservas.html')"""
 
 @app.route('/admin_usuarios', methods=["GET","POST"])
 def admin_usuarios():
