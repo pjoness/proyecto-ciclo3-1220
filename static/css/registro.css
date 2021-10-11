@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+    color:#4D4D4D;
+    box-sizing: border-box;
+}
+
+section{
+    width:100%;
+    height:100vh;
+}
+section .registro-img{
+    background-image: url(/static/images/registro-clientes.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+section .registro-img img{
+    width: 60px;
+    margin:20px;
+}
+section .form-registro{
+    position: relative;
+    width: 50%;
+    height: 100vh;
+    float:right;
+}
+section .form-registro .emote{
+    width: 150px;
+    display: block;
+    margin:auto;
+}
+section .form-registro form{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height:auto;
+    font-weight: 600;
+}
+section .form-registro form .input-nombre-apellido{
+    width: 100%;
+    height: 25px;
+    border-radius:25px;
+    border: none;
+    margin-bottom:20px;
+    outline: none;
+    padding:10px;
+    background-color: #E6E6E6;
+}
+section .form-registro form .nombre{
+    padding:0 45px;
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+section .form-registro form .apellido{
+    padding:0 45px;
+    float: right;
+    width: 50%;
+    text-align: center;
+}
+section .form-registro form .label-nombre-apellido{
+    display: block;
+    margin-bottom:10px;
+}
+section .form-registro form .label-diferent{
+    display: block;
+    margin-bottom:10px;
+    padding-left:45px;
+}
+section .form-registro form .input-diferent{
+    width:90%;
+    height: 25px;
+    border-radius:25px;
+    border: none;
+    margin-bottom:20px;
+    margin-left:45px;
+    outline: none;
+    padding:10px;
+    background-color: #E6E6E6;
+}
+
+section .form-registro form .btn-registro{
+    width: 100%;
+    text-align: center;
+}
+section .form-registro form .btn-registro input{
+    width: 130px;
+    height:40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #0071BC;
+    color:#fff;
+    cursor: pointer;
+}
