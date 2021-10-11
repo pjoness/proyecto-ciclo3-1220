@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, TextAreaField,
+IntField
 from wtforms.validators import DataRequired, Email
 
 class RegistroForm(FlaskForm):
@@ -23,9 +24,9 @@ class LoginForm(FlaskForm):
     iniciar_sesion = SubmitField('iniciar_sesion')
 
 class BuscarForm(FlaskForm):
-    personas = StringField('personas', DataRequired())
+    personas = IntField('personas', DataRequired())
 
-    habitaciones = StringField('habitaciones', DataRequired())
+    habitaciones = IntField('habitaciones', DataRequired())
 
     fecha_entrada = DateField('fecha_entrada', DataRequired())
 
@@ -33,8 +34,8 @@ class BuscarForm(FlaskForm):
   
     buscar = SubmitField('buscar')
 
-class CalificarForm(FlaskForm):
-    estrellas = StringField('estrellas', DataRequired())
+class CalificacionForm(FlaskForm):
+    estrellas = IntField('estrellas', DataRequired())
 
     mensaje = TextAreaField('mensaje')
 
@@ -55,7 +56,7 @@ class BuscarComentariosForm(FlaskForm):
 
     buscar = SubmitField('buscar')
 
-class AdminUsuariosForm(FlaskForm):
+class Usuarios(FlaskForm):
     id_usuario = StringField('id_usuario')
 
     nombre = StringField('nombre', validators=[DataRequired(message='No dejar vacío, completar')])
@@ -72,7 +73,7 @@ class AdminUsuariosForm(FlaskForm):
     editar = SubmitField('editar')
     eliminar = SubmitField('eliminar')
 
-class AdminHabitacionesForm(FlaskForm):
+class Habitaciones(FlaskForm):
     id_habitacion = StringField('id_habitacion')
 
     tipo_habitacion = StringField('tipo_habitacion', DataRequired())
@@ -83,7 +84,7 @@ class AdminHabitacionesForm(FlaskForm):
     editar = SubmitField('editar')
     eliminar = SubmitField('eliminar')
 
-class AdminComentariosForm(FlaskForm):
+class Comentarios(FlaskForm):
     id_comentario = StringField('id_comentario')
 
     bloquear = SubmitField('bloquear')
