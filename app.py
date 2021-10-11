@@ -1,4 +1,5 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
+import random
 
 app = Flask(__name__)
 
@@ -7,7 +8,8 @@ def index():
     if request.method == "POST":
         return render_template('/RAIZ/reservas.html')
     else:
-        return render_template('/RAIZ/index.html')
+        iframe = random.choice(['header.html','footer.html'])
+        return render_template('index.html', iframe=iframe)
 
 @app.route('/reservas', methods=["GET","POST"])
 def reservas():
@@ -22,7 +24,7 @@ def registro():
     if request.method == "POST":
         return render_template('/USUARIO/login.html')
     else:
-        return render_template('/USUARIO/registro.html')
+        return render_template('registro.html')
 
 @app.route('/login', methods=["GET","POST"])
 def login():
@@ -96,4 +98,5 @@ def terminos_y_condiciones():
     return render_template('/RAIZ/terminos_y_condiciones.html')
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
+    # app.run(debug=True)
