@@ -23,7 +23,7 @@ section .registro-img{
 }
 section .registro-img img{
     width: 60px;
-    margin:20px;
+    margin: 100px 0 0 30px;
 }
 section .form-registro{
     position: relative;

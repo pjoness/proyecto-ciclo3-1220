@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link rel="stylesheet" href="/static/css/login.css">
+    <title>Perfil cliente</title>
+    <link rel="stylesheet" href="/static/css/perfil-cliente.css">
     <link rel="stylesheet" href="/static/css/header.css">
 </head>
 <body>
@@ -34,23 +34,40 @@
         </nav>
     </header>
 
-<!--formulario de login-->
+<!--SECTION DEL PERFIL-->
+
     <section>
-        <div class="login-img">
-            <img src="/static/images/icons/logo.png" alt="">
+        <div class="culmn-iz">
+            <img src="/static/images/emote-cliente.png" alt="">
+            <p>Paul Rodriguez</p>
+            <p>paulrodri98@gmail.com</p>
+            <p>Paulrodri98</p>
         </div>
 
-        <div class="form-login">
-            <form method="post" action="/login">
-                <label for="" class="label-diferent">Dirección de correo electrónico</label>
-                <input type="text" name="correo" id="correo" class="input-diferent"><br><br>
-                <label for="" class="label-diferent">Contraseña</label><br>
-                <input type="password" class="input-diferent" name="password" id = "password">
-
-                <div class="btn-login">
-                    <input type="submit" value="Iniciar Sesion">
+        <div class="culmn-de">
+            <div class="row-reservas">
+                <div class="culmn1">
+                    <div class="centrar">
+                        <img src="/static/images/galery-habitacion-cuatro.jpg" alt="">
+                    </div>
                 </div>
-            </form>
+                <div class="culmn2">
+
+                        <h3>Lorem, ipsum dolor.</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur 
+                        adipisicing elit. Corrupti molestias autem ipsam aut! Iure, 
+                        debitis consequuntur molestiae quis rem nobis!
+                        </p>
+
+                </div>
+                <div class="culmn3">
+
+                        <a href="">Ver reserva</a>
+                        <a href="">Cancelar reserva</a>
+                        <a href="">Calificar</a>
+  
+                </div>
+            </div>
         </div>
     </section>
     

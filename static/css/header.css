@@ -11,8 +11,9 @@
 }
 
 .header-principal nav{
+    display: inline-block;
     margin:auto;
-    position: relative;
+    position: absolute;
     top:15%;
     width: 80%;
     text-align: right;
@@ -48,14 +49,18 @@
 }
 
 .header-principal .logotipo{
-    position: absolute;
+    position: relative;
     top:20%;
     left:10%;
     text-decoration: none;
     list-style: none;
+    cursor: pointer;
+    display: inline-block;
+    z-index: 100;
 }
 
 .header-principal .logotipo img{
+    width: 180px;
     max-width: 180px;
     min-width: 50px;
     margin:0;
