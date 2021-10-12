@@ -21,7 +21,7 @@ correos_admin = ['paul@gmail.com']
 
 sesion_iniciada = False
 
-@app.route('/', methods=["GET","POST"])
+@app.route('/', methods=["GET"])
 def index():
     if request.method == "POST":
         return render_template('reservas1.html')

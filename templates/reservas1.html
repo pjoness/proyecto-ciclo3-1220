@@ -22,11 +22,11 @@
         <h3>{{habitacion.nombre}}</h3>
         <p>{{habitacion.descripcion}}</p>
         <p>{{habitacion.precio}}</p>
-        <p><a href="/habitacion/{{ key }}">Seleccionar</a>
         <!---
-        <form action="/reservas" method="post">
+        <p><a href="/habitacion/{{ key }}">Seleccionar</a>--->
+        <form action="/habitacion/{{ key }}" method="get">
             <input type="submit" value="Reservar">
-        </form>--->
+        </form>
         {% endif %}
         {% endfor %}
     </body>

@@ -18,6 +18,13 @@
         <a href="/login">Login</a>
         <a href="/agregar_habitacion">Hab</a>
         <a href="/reservas">Reservas</a>
+        <form action="/reservas" method="get">
+            <input type="number" name="personas">
+            <input type="number" name="habitaciones">
+            <input type="date" name="fecha_entrada">
+            <input type="date" name="fecha_salida">
+            <input type="submit" value="buscar">
+        </form>
         {% for i in range(5) %}
             <p>{{i}}</p>
         {% endfor %}
