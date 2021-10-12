@@ -25,6 +25,7 @@
         <form action="/habitacion/{{ key }}" method="get">
             <input type="submit" value="Seleccionar">
         </form>
+        <a href="/habitacion/{{ key }}?personas=0&habitaciones=0&fecha_entrada=0&fecha_salida=0">Buscar</a>
         {% endif %}
         {% endfor %}
     </body>
