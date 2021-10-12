@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    color:#4D4D4D;
+}
+
+body{
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+
+.box{
+    position: absolute;
+    top:25%;
+    left:50%;
+    width:750px;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+}
+.box input{
+    position: relative;
+    display: inline-block;
+    font-size:20px;
+    box-sizing: border-box;
+    transition: .5s;
+}
+.box .form-filtro{
+     width: 750px;
+     height:50px;
+     border:none;
+     outline: none;
+     padding:0 25px;
+     border-radius:25px 25px 25px 25px;
+     background-color: #fff;
+     outline: none;
+}
+.box .form-filtro select{
+    margin:15px 5px;
+    border:none;
+    border-right:1px solid #4D4D4D;
+}
+.box input[type="date"]{
+    border:none;
+    font-size: 14px;
+    outline: none;
+}
+.box input[type="submit"]{
+    position: absolute;
+    right:0;
+    border-radius:0 25px 25px 0;
+    width: 150px;
+    height: 50px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    background-color:#0071BC ;
+    color:#fff;
+}
+
+.container{
+    position: relative;
+    background-color: rgba(0,0,0,0.72);
+}
+.slide-1{
+    background-image: url(/static/images/background-1.jpg);
+}
+.slide-2{
+    background-image: url(/static/images/background-2.jpg);
+}
+.slide-3{
+    background-image: url(/static/images/background-3.jpg);
+}
+
+.slide{
+    width:100%;
+    height:100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.caption{
+    /* background-color: rgba(0, 0, 0, .5); */
+    width: 100%;
+    position: absolute;
+    top:70%;
+    transform: translateY(-50%);
+    padding: 40px 0;
+    text-align: center;
+}
+.caption h3{
+    color:#fff;
+    text-align: center;
+    font-size: 50px;
+    padding:10px;
+}
+.caption p{
+    max-width: 600px;
+    width:90%;
+    margin: 0px auto;
+    color:#ccc;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+.caption .icons-servicios li{
+    margin:10px;
+    width: 30px;
+    list-style: none;
+    display:inline-block;
+}
+.caption a{
+    position: relative;
+    top:20px;
+    text-decoration: none;
+    color:#FFFFFF;
+    border:2px solid #FFFFFF;
+    padding:10px 15px;
+    border-radius: 8px;
+    transition: 0.5s;
+}
+.arrow{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    cursor:pointer;
+    z-index: 100;
+    border-radius: 50%;
+}
+.arrow img{
+    width: 40px;
+}
+.l{
+left:10px;
+}
+.r{
+right:10px;
+}
+
+/*efecto hover*/
+
+.caption a:hover{
+    border: 2px solid #0071BC;
+    color:#ffffff;
+    background-color: #0071BC;
+
+}
+
+/*QUIENES SOMOS*/
+
+.section-mision-vision{
+    margin-top:100px;
+    width: 100%;
+    height: 250px;
+    position: relative;
+}
+.section-mision-vision div{
+    width: 50%;
+    height: 100%;
+    float:left;
+    text-align: center;
+}
+.section-mision-vision div h3{
+    padding:30px 50px;
+    text-align: center;
+    font-size: 35px;
+    color:#0071BC;
+}
+.section-mision-vision div p{
+    margin:auto;
+    max-width: 60%;
+    min-width: 200px;
+    font-size: 16px;
+    float: none;
+    font-style: italic;
+    text-align: center;
+    color:#4D4D4D;
+}
+
+/*GALERÍA*/
+
+.galery{
+    margin-top:70px;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+}
+.galery h2{
+    color:#0071BC;
+    font-size: 35px;
+
+}
+.row-galery{
+    margin:auto;
+    display:flex;
+    padding:5px;
+    width: 80%;
+}
+.row-galery .column{
+    flex:25%;
+    padding:5px;
+}
+.row-galery .column img{
+    width: 100%;
+}
+
+@media (max-width:800px){
+    .column{
+        flex:50%;
+    }  
+}
+@media (max-width:600px){
+    .column{
+        flex:100%;
+    }  
+}

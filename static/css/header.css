@@ -1,0 +1,82 @@
+
+.header-principal{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height:80px;
+    background-color:#FFFFFF;
+    -webkit-box-shadow: 2px 9px 11px -7px rgba(0,0,0,0.72); 
+    box-shadow: 2px 9px 11px -7px rgba(0,0,0,0.72);
+    z-index: 100;
+}
+
+.header-principal nav{
+    display: inline-block;
+    margin:auto;
+    position: absolute;
+    top:15%;
+    width: 80%;
+    text-align: right;
+}
+
+.header-principal nav li{
+    display:inline-block;
+    padding:10px 15px;
+}
+
+.header-principal nav .login{
+    border-left:2px solid #4D4D4D;
+}
+
+.header-principal nav li a{
+    list-style: none;
+    text-decoration: none;
+    color:#4D4D4D;
+    transition: 0.5s;
+}
+
+.header-principal nav li .icon-menu{
+    position: relative;
+    top:5px;
+    transition: 0.5s;
+}
+
+.header-principal nav .registro a{
+    background-color: #0071BC;
+    padding: 5px 10px;
+    border-radius: 15px;
+    color:#FFFFFF;
+}
+
+.header-principal .logotipo{
+    position: relative;
+    top:20%;
+    left:10%;
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+    display: inline-block;
+    z-index: 100;
+}
+
+.header-principal .logotipo img{
+    width: 180px;
+    max-width: 180px;
+    min-width: 50px;
+    margin:0;
+}
+
+/*efectos de hover*/
+
+.header-principal nav li a:hover{
+    color:#0071BC;
+}
+
+.header-principal nav li a:hover>.icon-menu{
+    fill:#0071BC;
+}
+
+.header-principal nav .registro a:hover{
+    background-color: #FFFFFF;
+    color:#0071BC;
+}
