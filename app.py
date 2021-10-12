@@ -28,7 +28,7 @@ def index():
     if request.method == "POST":
         return render_template('zreservas.html')
     else:
-        return render_template('zindex.html', sesion_iniciada=sesion_iniciada)
+        return render_template('index.html', sesion_iniciada=sesion_iniciada)
 
 @app.route('/reservas', methods=["GET","POST"])
 def reservas():
