@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+        <h1>Titulo</h1>
+        {% if sesion_iniciada %}
+            <p>Bienvenido {{id_usuario}} </p>
+            <!---vinculo para perfil usuario--->
+            <form action="/salir" method="post">
+            <input type="submit" value="Salir">
+            </form>
+        {% else %}
+            <p>Recuerda iniciar sesion</p>
+        {% endif %}
+
+        {% for key, reserva in lista_reservas.items() %}
+        {% if reserva.id_user == id_usuario %}
+        <div>
+            <p>Codigo: {{key}}</p>
+            <p>Usuario: {{reserva.id_user}}</p>
+            <p>Habitacion: {{reserva.id_habitacion}}</p>
+            <form action="/calificar" method="get">
+                <input type="submit" value="Calificar">
+            </form>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <br>
+        <a href="/registro">Registro</a>
+        <a href="/login">Login</a>
+        <a href="/agregar_habitacion">Hab</a>
+        <br>
+    </body>
+    </html>

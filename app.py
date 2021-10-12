@@ -10,27 +10,29 @@ app.secret_key = os.urandom(32)
 
 lista_habitaciones = {
     'id1':{'id':'id1','nombre':'Hab 1', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':100,'disponible':1, 'imagenes':['img1']},
-    'id2':{'id':'id2','nombre':'Hab 2', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':100,'disponible':0, 'imagenes':['img1']},
-    'id3':{'id':'id3','nombre':'Hab 3', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':100,'disponible':1, 'imagenes':['img1']}}
+    'id2':{'id':'id2','nombre':'Hab 2', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':200,'disponible':0, 'imagenes':['img1']},
+    'id3':{'id':'id3','nombre':'Hab 3', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':300,'disponible':1, 'imagenes':['img1']}}
 
-lista_usuarios = ['aaa','bbb','ccc']
+lista_usuarios = ['Andres','Carlos','Juan']
 
-correos = ['aaa@gmail.com','bbb@gmail.com','ccc@gmail.com']
-
-correos_admin = ['paul@gmail.com']
+lista_reservas = {
+    'r1': {'id_user':'Andres', 'id_habitacion':'id1'},
+    'r2':{'id_user':'Carlos', 'id_habitacion':'id2'},
+    'r3':{'id_user':'Carlos', 'id_habitacion':'id3'},
+}
 
 sesion_iniciada = False
 
 @app.route('/', methods=["GET"])
 def index():
     if request.method == "POST":
-        return render_template('reservas1.html')
+        return render_template('zreservas.html')
     else:
-        return render_template('index1.html', sesion_iniciada=sesion_iniciada)
+        return render_template('zindex.html', sesion_iniciada=sesion_iniciada)
 
 @app.route('/reservas', methods=["GET","POST"])
 def reservas():
-    return render_template('reservas1.html', lista_habitaciones=lista_habitaciones)
+    return render_template('zreservas.html', lista_habitaciones=lista_habitaciones)
 
 @app.route('/registro', methods=["GET","POST"])
 def registro():
@@ -65,28 +67,33 @@ def salir():
 
 @app.route('/habitacion/<string:id_habitacion>', methods=["GET","POST"])
 def habitacion(id_habitacion):
+    global sesion_iniciada
     if id_habitacion in lista_habitaciones.keys():
         if request.method == "POST":
             id_habitacion = id_habitacion
             return "Habitacion reservada"
         else:
-            return render_template('habitacion1.html', habitacion=lista_habitaciones[id_habitacion])
+            return render_template('zhabitacion.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada)
     else:
         return f'habitacion con codigo {id_habitacion} no encontrada'
 
 @app.route('/perfil/<string:id_usuario>', methods=["GET"])
 def perfil(id_usuario):
-    if id_usuario in lista_usuarios:
-        return render_template('/USUARIO/perfil.html')
+    global sesion_iniciada
+    if sesion_iniciada:
+        if id_usuario in lista_usuarios:
+            return render_template('zperfil.html', id_usuario = id_usuario, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
+        else:
+            return f'usuario con codigo {id_usuario} no encontrado'
     else:
-        return f'usuario con codigo {id_usuario} no encontrado'
+        return redirect('/login')
 
 @app.route('/calificar',methods=["GET","POST"])
 def calificar():
     if request.method == "POST":
         estrellas = request.form['estrellas']
         mensaje = request.form['mensaje']
-        return render_template('perfil.html')
+        return render_template('zperfil.html')
     else:
         return render_template('calificar.html')
 

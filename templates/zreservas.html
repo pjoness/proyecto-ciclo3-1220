@@ -2,13 +2,12 @@
     <html>
     <head></head>
     <body>
-        <h1>Titulo</h1>
+        <h1>Reservas</h1>
         {% if sesion_iniciada %}
             <p>Bienvenidos</p>
             <!---vinculo para perfil usuario--->
             <a href="/perfil/user">Perfil<a>
             <form action="/salir" method="post">
-                {{ crsf_token}}
             <input type="submit" value="Salir">
             </form>
         {% else %}
@@ -17,16 +16,16 @@
         <a href="/registro">Registro</a>
         <a href="/login">Login</a>
         <a href="/agregar_habitacion">Hab</a>
-        <a href="/reservas">Reservas</a>
-        <form action="/reservas" method="get">
-            <input type="number" name="personas">
-            <input type="number" name="habitaciones">
-            <input type="date" name="fecha_entrada">
-            <input type="date" name="fecha_salida">
-            <input type="submit" value="buscar">
+        <br>
+        {% for key, habitacion in lista_habitaciones.items() %}
+        {% if habitacion.disponible == 1 %}
+        <h3>{{habitacion.nombre}}</h3>
+        <p>{{habitacion.descripcion}}</p>
+        <p>Precio: {{habitacion.precio}}</p>
+        <form action="/habitacion/{{ key }}" method="get">
+            <input type="submit" value="Seleccionar">
         </form>
-        {% for i in range(5) %}
-            <p>{{i}}</p>
+        {% endif %}
         {% endfor %}
     </body>
     </html>

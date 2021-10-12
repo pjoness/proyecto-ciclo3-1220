@@ -6,8 +6,9 @@
         {% if sesion_iniciada %}
             <p>Bienvenidos</p>
             <!---vinculo para perfil usuario--->
-            <a href="/perfil/user">Perfil<a>
+            <a href="/perfil/Andres">Perfil<a>
             <form action="/salir" method="post">
+                {{ crsf_token}}
             <input type="submit" value="Salir">
             </form>
         {% else %}
@@ -16,18 +17,16 @@
         <a href="/registro">Registro</a>
         <a href="/login">Login</a>
         <a href="/agregar_habitacion">Hab</a>
-        <br>
-        {% for key, habitacion in lista_habitaciones.items() %}
-        {% if habitacion.disponible == 1 %}
-        <h3>{{habitacion.nombre}}</h3>
-        <p>{{habitacion.descripcion}}</p>
-        <p>{{habitacion.precio}}</p>
-        <!---
-        <p><a href="/habitacion/{{ key }}">Seleccionar</a>--->
-        <form action="/habitacion/{{ key }}" method="get">
-            <input type="submit" value="Reservar">
+        <a href="/reservas">Reservas</a>
+        <form action="/reservas" method="get">
+            <input type="number" name="personas">
+            <input type="number" name="habitaciones">
+            <input type="date" name="fecha_entrada">
+            <input type="date" name="fecha_salida">
+            <input type="submit" value="buscar">
         </form>
-        {% endif %}
+        {% for i in range(5) %}
+            <p>{{i}}</p>
         {% endfor %}
     </body>
     </html>
