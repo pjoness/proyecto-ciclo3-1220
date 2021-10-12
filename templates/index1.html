@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+        <h1>Titulo</h1>
+        {% if sesion_iniciada %}
+            <p>Bienvenidos</p>
+            <!---vinculo para perfil usuario--->
+            <a href="/perfil/user">Perfil<a>
+            <form action="/salir" method="post">
+                {{ crsf_token}}
+            <input type="submit" value="Salir">
+            </form>
+        {% else %}
+            <p>Recuerda iniciar sesion</p>
+        {% endif %}
+        <a href="/registro">Registro</a>
+        <a href="/login">Login</a>
+        <a href="/agregar_habitacion">Hab</a>
+        <a href="/reservas">Reservas</a>
+        {% for i in range(5) %}
+            <p>{{i}}</p>
+        {% endfor %}
+    </body>
+    </html>

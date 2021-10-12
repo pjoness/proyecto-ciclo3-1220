@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "repl_python3_proyecto-ciclo3-1"
+name = "proyecto-ciclo3-1"
 version = "0.1.0"
 description = ""
 authors = ["PaulJones9 <<>>"]
@@ -7,8 +7,7 @@ authors = ["PaulJones9 <<>>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Flask = "^2.0.2"
-Flask-WTF = "^0.15.1"
-WTForms = "^2.3.3"
+Jinja2 = "^3.0.2"
 
 [tool.poetry.dev-dependencies]
 

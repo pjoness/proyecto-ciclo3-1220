@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+        <h1>Titulo</h1>
+        {% if sesion_iniciada %}
+            <p>Bienvenidos</p>
+            <!---vinculo para perfil usuario--->
+            <a href="/perfil/user">Perfil<a>
+            <form action="/salir" method="post">
+            <input type="submit" value="Salir">
+            </form>
+        {% else %}
+            <p>Recuerda iniciar sesion</p>
+        {% endif %}
+        <a href="/registro">Registro</a>
+        <a href="/login">Login</a>
+        <a href="/agregar_habitacion">Hab</a>
+        <br>
+        {% for key, habitacion in lista_habitaciones.items() %}
+        {% if habitacion.disponible == 1 %}
+        <h3>{{habitacion.nombre}}</h3>
+        <p>{{habitacion.descripcion}}</p>
+        <p>{{habitacion.precio}}</p>
+        <p><a href="/habitacion/{{ key }}">Seleccionar</a>
+        <!---
+        <form action="/reservas" method="post">
+            <input type="submit" value="Reservar">
+        </form>--->
+        {% endif %}
+        {% endfor %}
+    </body>
+    </html>
