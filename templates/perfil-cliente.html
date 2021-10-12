@@ -50,6 +50,7 @@
         </div>
 
         <div class="culmn-de">
+        {% for key, reserva in lista_reservas.items() %}
             <div class="row-reservas">
                 <div class="culmn1">
                     <div class="centrar">
@@ -58,12 +59,13 @@
                 </div>
                 <div class="culmn2">
 
-                        <h3>Habitación 1</h3>
-                        <p>Lorem ipsum dolor, sit amet consectetur 
-                        adipisicing elit. Corrupti molestias autem ipsam aut! Iure, 
-                        debitis consequuntur molestiae quis rem nobis!
-                        </p>
-
+                        <h3>{{reserva.key}}</h3>
+                        <p>{{reserva.id_user}}</p>
+                        <p>{{reserva.id_habitacion}}</p>
+                        <p>{{reserva.personas}}</p>
+                        <p>{{reserva.habitaciones}}</p>
+                        <p>{{reserva.dias}}</p>
+                        <p>{{reserva.valor}}</p>
                 </div>
                 <div class="culmn3">
 
@@ -73,78 +75,7 @@
   
                 </div>
             </div>
-
-            <div class="row-reservas" style="margin-top:50px;">
-                <div class="culmn1">
-                    <div class="centrar">
-                        <img src="/static/images/galery-habitacion-cuatro.jpg" alt="">
-                    </div>
-                </div>
-                <div class="culmn2">
-
-                        <h3>Habitación 2</h3>
-                        <p>Lorem ipsum dolor, sit amet consectetur 
-                        adipisicing elit. Corrupti molestias autem ipsam aut! Iure, 
-                        debitis consequuntur molestiae quis rem nobis!
-                        </p>
-
-                </div>
-                <div class="culmn3">
-
-                        <a href="" class="btn-reserva">Ver reserva</a>
-                        <a href="" class="btn-cancelar">Cancelar reserva</a>
-                        <a href="" class="btn-calificar">Calificar</a>
-  
-                </div>
-            </div>
-
-            <div class="row-reservas" style="margin-top:50px;">
-                <div class="culmn1">
-                    <div class="centrar">
-                        <img src="/static/images/galery-habitacion-cuatro.jpg" alt="">
-                    </div>
-                </div>
-                <div class="culmn2">
-
-                        <h3>Habitación 3</h3>
-                        <p>Lorem ipsum dolor, sit amet consectetur 
-                        adipisicing elit. Corrupti molestias autem ipsam aut! Iure, 
-                        debitis consequuntur molestiae quis rem nobis!
-                        </p>
-
-                </div>
-                <div class="culmn3">
-
-                        <a href="" class="btn-reserva">Ver reserva</a>
-                        <a href="" class="btn-cancelar">Cancelar reserva</a>
-                        <a href="" class="btn-calificar">Calificar</a>
-  
-                </div>
-            </div>
-
-            <div class="row-reservas" style="margin-top:50px;">
-                <div class="culmn1">
-                    <div class="centrar">
-                        <img src="/static/images/galery-habitacion-cuatro.jpg" alt="">
-                    </div>
-                </div>
-                <div class="culmn2">
-
-                        <h3>Habitación 4</h3>
-                        <p>Lorem ipsum dolor, sit amet consectetur 
-                        adipisicing elit. Corrupti molestias autem ipsam aut! Iure, 
-                        debitis consequuntur molestiae quis rem nobis!
-                        </p>
-
-                </div>
-                <div class="culmn3">
-
-                        <a href="" class="btn-reserva">Ver reserva</a>
-                        <a href="" class="btn-cancelar">Cancelar reserva</a>
-                        <a href="" class="btn-calificar">Calificar</a>
-  
-                </div>
-            </div>
+        {% endfor %}
         </div>
     </section>
     

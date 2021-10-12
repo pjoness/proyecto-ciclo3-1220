@@ -16,9 +16,9 @@ lista_habitaciones = {
 lista_usuarios = ['Andres','Carlos','Juan']
 
 lista_reservas = {
-    'r1': {'id_user':'Andres', 'id_habitacion':'id1'},
-    'r2':{'id_user':'Carlos', 'id_habitacion':'id2'},
-    'r3':{'id_user':'Carlos', 'id_habitacion':'id3'},
+    'reserva1': {'id_user':'Andres', 'id_habitacion':'id1', 'valor':1200, 'personas':1,'habitaciones':1,'dias':5},
+    'reserva2': {'id_user':'Carlos', 'id_habitacion':'id1', 'valor':1400, 'personas':2,'habitaciones':1,'dias':4},
+    'reserva3': {'id_user':'Carlos', 'id_habitacion':'id1', 'valor':1700, 'personas':1,'habitaciones':3,'dias':7},
 }
 
 sesion_iniciada = False
@@ -59,7 +59,7 @@ def login():
     else:
         return render_template('login.html')
 
-@app.route('/salir', methods=["POST"])
+@app.route('/salir', methods=["GET"])
 def salir():
     global sesion_iniciada
     sesion_iniciada = False
@@ -82,7 +82,7 @@ def perfil(id_usuario):
     global sesion_iniciada
     if sesion_iniciada:
         if id_usuario in lista_usuarios:
-            return render_template('zperfil.html', id_usuario = id_usuario, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
+            return render_template('perfil-cliente.html', id_usuario = id_usuario, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
         else:
             return f'usuario con codigo {id_usuario} no encontrado'
     else:
