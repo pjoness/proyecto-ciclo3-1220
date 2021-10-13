@@ -43,7 +43,7 @@
     <section>
         <div class="culmn-iz">
             <img src="/static/images/emote-cliente.png" alt="">
-            <p>Paul Rodriguez</p>
+            <p>{{id_usuario}}</p>
             <p>paulrodri98@gmail.com</p>
             <p>Paulrodri98</p>
             <a href="" class="btn-actualizar-perfil">Actualizar perfil</a>
@@ -51,6 +51,7 @@
 
         <div class="culmn-de">
         {% for key, reserva in lista_reservas.items() %}
+        {% if reserva.id_user == id_usuario %}
             <div class="row-reservas">
                 <div class="culmn1">
                     <div class="centrar">
@@ -59,22 +60,23 @@
                 </div>
                 <div class="culmn2">
 
-                        <h3>{{reserva.key}}</h3>
-                        <p>{{reserva.id_user}}</p>
-                        <p>{{reserva.id_habitacion}}</p>
-                        <p>{{reserva.personas}}</p>
-                        <p>{{reserva.habitaciones}}</p>
-                        <p>{{reserva.dias}}</p>
-                        <p>{{reserva.valor}}</p>
+                        <h3>Codigo: {{key}}</h3>
+                        <p>Usuario: {{reserva.id_user}}</p>
+                        <p>Habitacion: {{reserva.id_habitacion}}</p>
+                        <p>Personas: {{reserva.personas}}</p>
+                        <p>Habitaciones: {{reserva.habitaciones}}</p>
+                        <p>Cantidad dias: {{reserva.dias}}</p>
+                        <p>Valor Total: {{reserva.valor}}</p>
                 </div>
                 <div class="culmn3">
 
                         <a href="" class="btn-reserva">Ver reserva</a>
                         <a href="" class="btn-cancelar">Cancelar reserva</a>
-                        <a href="" class="btn-calificar">Calificar</a>
+                        <a href="/calificar" class="btn-calificar">Calificar</a>
   
                 </div>
             </div>
+        {% endif %}
         {% endfor %}
         </div>
     </section>
