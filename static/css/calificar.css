@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    color:#4D4D4D;
+}
+
+section{
+    width:100%;
+    height:100vh;
+}
+section .login-img{
+    background-image: url(/static/images/registro-clientes.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+section .login-img img{
+    width: 60px;
+    margin: 100px 0 0 30px;
+}
+
+section .form-login{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    float:center;
+    text-align: center;
+}
+section .form-login .emote{
+    width: 150px;
+    display: block;
+    margin:auto;
+}
+section .form-login form{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height:auto;
+    font-weight: 400;
+    font-size: 18px;
+}
+section .form-login input{
+    margin:auto;
+    width: 60%;
+    display: block;
+    border:none;
+    border-radius:25px;
+    background-color: #E6E6E6;
+    margin-top:10px;
+    outline: none;
+    padding: 5px 15px;
+}
+section .form-login .btn-login input{
+    background-color: #0071BC;
+    color:#fff;
+    padding:5px;
+    width: 130px;
+    margin-top:15px;
+
+}

@@ -1,6 +1,6 @@
 from flask import Flask
-from flask import render_template, request, redirect, url_for
-# from forms import RegistroForm, LoginForm, Habitaciones
+from flask import render_template, request, redirect, url_for, flash
+from forms import RegistroForm, LoginForm, Habitaciones
 import os
 
 app = Flask(__name__)
@@ -21,6 +21,10 @@ lista_reservas = {
     'reserva3': {'id_user':'Carlos', 'id_habitacion':'id1', 'valor':1700, 'personas':1,'habitaciones':3,'dias':7},
 }
 
+lista_correos = ['andres@gmail.com','carlos@gmail.com',"juan@gmail.com"]
+
+correos_admin = ['admin@gmail.com']
+
 sesion_iniciada = False
 
 @app.route('/', methods=["GET"])
@@ -32,7 +36,7 @@ def index():
 
 @app.route('/reservas', methods=["GET","POST"])
 def reservas():
-    return render_template('zreservas.html', lista_habitaciones=lista_habitaciones)
+    return render_template('reservas.html', lista_habitaciones=lista_habitaciones)
 
 @app.route('/registro', methods=["GET","POST"])
 def registro():
@@ -54,8 +58,15 @@ def login():
     if request.method == "POST":
         correo = request.form['correo']
         password = request.form['password']
-        sesion_iniciada = True
-        return redirect('/')
+        if correo in lista_correos:
+            sesion_iniciada = True
+            return redirect('/')
+        elif correo in correos_admin:
+            sesion_iniciada = True
+            return render_template("admin_home.html")
+        else:
+            flash("Correo Invalido")
+            return redirect("/login")
     else:
         return render_template('login.html')
 
@@ -73,7 +84,7 @@ def habitacion(id_habitacion):
             id_habitacion = id_habitacion
             return "Habitacion reservada"
         else:
-            return render_template('zhabitacion.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada)
+            return render_template('habitaciones.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada)
     else:
         return f'habitacion con codigo {id_habitacion} no encontrada'
 
@@ -93,7 +104,7 @@ def calificar():
     if request.method == "POST":
         estrellas = request.form['estrellas']
         mensaje = request.form['mensaje']
-        return render_template('zperfil.html')
+        return redirect('/perfil/Andres')
     else:
         return render_template('calificar.html')
 

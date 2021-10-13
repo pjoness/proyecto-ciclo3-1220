@@ -50,9 +50,9 @@
             </div>
             <div class="div-dere">
                 <div class="div-centrar">
-                <h3 class="h3-titulo">Habitación 1</h3>
-                <p class="p-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <p class="p-valor">$135.000</p>
+                <h3 class="h3-titulo">{{habitacion.nombre}}</h3>
+                <p class="p-info">{{habitacion.descripcion}}</p>
+                <p class="p-valor">${{habitacion.precio}} USD</p>
                 <li><a href="#" class="a-reservar a-mas">Ver más</a>
                 <ul class="ul-submenu">
                     <li><a href=""><img src="/static/images/icons/icon-servicio-uno-dorado.svg" alt=""></a></li>
@@ -61,7 +61,14 @@
                     <li><a href=""><img src="/static/images/icons/icon-servicio-cuatro-dorado.svg" alt=""></a></li>
                     <li><a href=""><img src="/static/images/icons/icon-servicio-cinco-dorado.svg" alt=""></a></li>
                 </ul></li>
-                <li><a href="#" class="a-reservar a-hover">Reservar</a></li>
+                {% if sesion_iniciada %}
+                <li><!---<a href="#" class="a-reservar a-hover">Reservar</a>-->
+                <form action="/habitacion/{{habitacion.id}}" method="post">
+                <input type="submit" class="a-reservar a-hover" value="Reservar">
+                </form></li>
+                {% else %}
+                <li><a href="/login" class="a-reservar a-hover">Iniciar Sesion</a></li>
+                {% endif %}
                 </div>
             </div>
 
