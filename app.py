@@ -13,7 +13,9 @@ lista_habitaciones = {
     'id2':{'id':'id2','nombre':'Hab 2', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':200,'disponible':0, 'imagenes':['img1']},
     'id3':{'id':'id3','nombre':'Hab 3', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':300,'disponible':1, 'imagenes':['img1']}}
 
-lista_usuarios = ['Andres','Carlos','Juan']
+lista_usuarios = {
+    'andres':{'nombre':'Andres','apellido':'Garcia','correo':'andres@gmail.com','password':'123'},
+}
 
 lista_reservas = {
     'reserva1': {'id_user':'Andres', 'id_habitacion':'id1', 'valor':1200, 'personas':1,'habitaciones':1,'dias':5},
@@ -47,6 +49,9 @@ def registro():
         correo = request.form['correo']
         usuario = request.form['usuario']
         password = request.form['password']
+
+        lista_usuarios[usuario] = {'nombre': nombre,'apellido':apellido,'correo':correo,'password':password}
+
         return redirect('/login')
     else:
         return render_template('registro.html')
@@ -56,16 +61,20 @@ def login():
     # form = LoginForm()
     global sesion_iniciada
     if request.method == "POST":
-        correo = request.form['correo']
+        usuario = request.form['usuario']
         password = request.form['password']
-        if correo in lista_correos:
-            sesion_iniciada = True
-            return redirect('/')
-        elif correo in correos_admin:
+        if usuario in lista_usuarios.keys():
+            if password == lista_usuarios[usuario]['password'] :
+                sesion_iniciada = True
+                return redirect('/')
+            else:
+                flash("Clave Invalida")
+                return redirect("/login")
+        elif usuario in correos_admin:
             sesion_iniciada = True
             return render_template("admin_home.html")
         else:
-            flash("Correo Invalido")
+            flash("Usuario Invalido")
             return redirect("/login")
     else:
         return render_template('login.html')
@@ -81,7 +90,9 @@ def habitacion(id_habitacion):
     global sesion_iniciada
     if id_habitacion in lista_habitaciones.keys():
         if request.method == "POST":
+            personas = request.args.get('personas')
             id_habitacion = id_habitacion
+            print('personas son',personas)
             return "Habitacion reservada"
         else:
             return render_template('habitaciones.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada)
