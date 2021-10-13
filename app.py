@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, request, redirect, url_for
-from forms import RegistroForm, LoginForm, Habitaciones
+# from forms import RegistroForm, LoginForm, Habitaciones
 import os
 
 app = Flask(__name__)
