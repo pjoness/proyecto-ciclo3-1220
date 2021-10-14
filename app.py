@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from forms import RegistroForm, LoginForm, Habitaciones
 import os
+import datetime
 
 app = Flask(__name__)
 
@@ -41,7 +42,13 @@ def reservas():
     fecha_entrada = request.args['fecha_entrada']
     fecha_salida = request.args['fecha_salida']
 
-    buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida}
+    date_entrada = datetime.datetime.strptime(fecha_entrada, "%Y-%m-%d")
+    date_salida = datetime.datetime.strptime(fecha_salida, "%Y-%m-%d")
+
+    dias = (date_salida - date_entrada).days
+
+    buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida,
+    'dias':dias}
 
     return render_template('reservas.html', lista_habitaciones=lista_habitaciones, buscar=buscar)
 
@@ -55,9 +62,13 @@ def registro():
         usuario = request.form['usuario']
         password = request.form['password']
 
-        lista_usuarios[usuario] = {'nombre': nombre,'apellido':apellido,'correo':correo,'password':password}
-
-        return redirect('/login')
+        if usuario in lista_usuarios.keys():
+            flash('Usuario ya existe')
+            return render_template('registro.html')
+        else:
+            lista_usuarios[usuario] = {'nombre': nombre,'apellido':apellido,'correo':correo,'password':password}
+            
+            return redirect('/login')
     else:
         return render_template('registro.html')
 
@@ -68,6 +79,7 @@ def login():
     if request.method == "POST":
         usuario = request.form['usuario']
         password = request.form['password']
+
         if usuario in lista_usuarios.keys():
             if password == lista_usuarios[usuario]['password'] :
                 sesion_iniciada = True
@@ -100,21 +112,32 @@ def habitacion(id_habitacion):
         fecha_entrada = request.args['fecha_entrada']
         fecha_salida = request.args['fecha_salida']
 
-        buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida}
+        date_entrada = datetime.datetime.strptime(fecha_entrada, "%Y-%m-%d")
+        date_salida = datetime.datetime.strptime(fecha_salida, "%Y-%m-%d")
 
-        return render_template('habitaciones.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada, buscar=buscar, id_habitacion=id_habitacion)
+        dias = (date_salida - date_entrada).days
+
+        precio = lista_habitaciones[id_habitacion]['precio']
+
+        valor = precio*dias
+
+        buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida,
+        'dias':dias,
+        'valor':valor}
+
+        return render_template('habitaciones.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada, buscar=buscar, id_habitacion=id_habitacion, valor=valor)
     else:
         return f'habitacion con codigo {id_habitacion} no encontrada'
 
-@app.route('/crear_reserva', methods=["GET","POST"])
+@app.route('/crear_reserva', methods=["POST"])
 def crear_reserva():
     codigo_reserva = "123"
-    id_habitacion = request.args['id_habitacion']
-    personas = request.args['personas']
-    habitaciones = request.args['habitaciones']
-    fecha_entrada = request.args['fecha_entrada']
-    fecha_salida = request.args['fecha_salida']
-    precio = request.args['fecha_salida']
+    id_habitacion = request.form['id_habitacion']
+    personas = request.form['personas']
+    habitaciones = request.form['habitaciones']
+    fecha_entrada = request.form['fecha_entrada']
+    fecha_salida = request.form['fecha_salida']
+    precio = request.form['precio']
 
     lista_reservas[codigo_reserva] = {
     'id_user':'andres20',
@@ -126,7 +149,7 @@ def crear_reserva():
     'valor': precio,
     'dias': 7}
 
-    return "<h3>Reserva generada para habitacion {}, personas: {}, habitaciones {}, fecha_entrada: {} y fecha_salida: {}</h3>".format(id_habitacion, personas, habitaciones, fecha_entrada, fecha_salida)
+    return "<p>Reserva generada para habitacion {}, personas: {}, habitaciones {}, fecha_entrada: {} y fecha_salida: {}</p>".format(id_habitacion, personas, habitaciones, fecha_entrada, fecha_salida)
 
 
 @app.route('/perfil/<string:id_usuario>', methods=["GET"])
