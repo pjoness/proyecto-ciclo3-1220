@@ -62,10 +62,7 @@
                     <li><a href=""><img src="/static/images/icons/icon-servicio-cinco-dorado.svg" alt=""></a></li>
                 </ul></li>
                 {% if sesion_iniciada %}
-                <li><!---<a href="#" class="a-reservar a-hover">Reservar</a>-->
-                <form action="/habitacion/{{habitacion.id}}" method="post">
-                <input type="submit" class="a-reservar a-hover" value="Reservar">
-                </form></li>
+                <li><a href="/crear_reserva?id_habitacion={{id_habitacion}}&personas={{buscar.personas}}&habitaciones={{buscar.habitaciones}}&fecha_entrada={{buscar.fecha_entrada}}&fecha_salida={{buscar.fecha_salida}}&precio={{habitacion.precio}}" class="a-reservar a-hover">Reservar</a></li>
                 {% else %}
                 <li><a href="/login" class="a-reservar a-hover">Iniciar Sesion</a></li>
                 {% endif %}

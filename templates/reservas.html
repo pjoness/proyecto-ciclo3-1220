@@ -60,7 +60,7 @@
                         <p class="p-valor">${{habitacion.precio}} USD</p>
                 </div>
                 <div class="culmn3">
-                        <a href="/habitacion/{{ key }}?personas=0&habitaciones=0&fecha_entrada=0&fecha_salida=0" class="btn-reserva">Seleccionar</a>
+                        <a href="/habitacion/{{ key }}?personas={{buscar.personas}} &habitaciones={{buscar.habitaciones}}&fecha_entrada={{buscar.fecha_entrada}}&fecha_salida={{buscar.fecha_salida}}" class="btn-reserva">Seleccionar</a>
                 </div>
             </div>
         {% endfor %}

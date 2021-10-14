@@ -23,9 +23,7 @@ lista_reservas = {
     'reserva3': {'id_user':'Carlos', 'id_habitacion':'id1', 'valor':1700, 'personas':1,'habitaciones':3,'dias':7},
 }
 
-lista_correos = ['andres@gmail.com','carlos@gmail.com',"juan@gmail.com"]
-
-correos_admin = ['admin@gmail.com']
+comentarios = {'1':{'estrellas':5,'mensaje':'Lorem ipsum, dolor sit amet consectetur adipisicing','bloqueo':0}}
 
 sesion_iniciada = False
 
@@ -38,7 +36,14 @@ def index():
 
 @app.route('/reservas', methods=["GET","POST"])
 def reservas():
-    return render_template('reservas.html', lista_habitaciones=lista_habitaciones)
+    personas = request.args['personas']
+    habitaciones = request.args['habitaciones']
+    fecha_entrada = request.args['fecha_entrada']
+    fecha_salida = request.args['fecha_salida']
+
+    buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida}
+
+    return render_template('reservas.html', lista_habitaciones=lista_habitaciones, buscar=buscar)
 
 @app.route('/registro', methods=["GET","POST"])
 def registro():
@@ -85,25 +90,50 @@ def salir():
     sesion_iniciada = False
     return redirect('/')
 
-@app.route('/habitacion/<string:id_habitacion>', methods=["GET","POST"])
+@app.route('/habitacion/<string:id_habitacion>', methods=["GET"])
 def habitacion(id_habitacion):
     global sesion_iniciada
     if id_habitacion in lista_habitaciones.keys():
-        if request.method == "POST":
-            personas = request.args.get('personas')
-            id_habitacion = id_habitacion
-            print('personas son',personas)
-            return "Habitacion reservada"
-        else:
-            return render_template('habitaciones.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada)
+        
+        personas = request.args['personas']
+        habitaciones = request.args['habitaciones']
+        fecha_entrada = request.args['fecha_entrada']
+        fecha_salida = request.args['fecha_salida']
+
+        buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida}
+
+        return render_template('habitaciones.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada, buscar=buscar, id_habitacion=id_habitacion)
     else:
         return f'habitacion con codigo {id_habitacion} no encontrada'
+
+@app.route('/crear_reserva', methods=["GET","POST"])
+def crear_reserva():
+    codigo_reserva = "123"
+    id_habitacion = request.args['id_habitacion']
+    personas = request.args['personas']
+    habitaciones = request.args['habitaciones']
+    fecha_entrada = request.args['fecha_entrada']
+    fecha_salida = request.args['fecha_salida']
+    precio = request.args['fecha_salida']
+
+    lista_reservas[codigo_reserva] = {
+    'id_user':'andres20',
+    'id_habitacion': id_habitacion,
+    'personas': personas,
+    'habitaciones': habitaciones,
+    'fecha_entrada': fecha_entrada,
+    'fecha_salida': fecha_salida,
+    'valor': precio,
+    'dias': 7}
+
+    return "<h3>Reserva generada para habitacion {}, personas: {}, habitaciones {}, fecha_entrada: {} y fecha_salida: {}</h3>".format(id_habitacion, personas, habitaciones, fecha_entrada, fecha_salida)
+
 
 @app.route('/perfil/<string:id_usuario>', methods=["GET"])
 def perfil(id_usuario):
     global sesion_iniciada
     if sesion_iniciada:
-        if id_usuario in lista_usuarios:
+        if id_usuario in lista_usuarios.keys():
             return render_template('perfil-cliente.html', id_usuario = id_usuario, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
         else:
             return f'usuario con codigo {id_usuario} no encontrado'
@@ -115,6 +145,13 @@ def calificar():
     if request.method == "POST":
         estrellas = request.form['estrellas']
         mensaje = request.form['mensaje']
+
+        comentarios['id_comentario'] = {
+            'estrellas':estrellas,
+            'mensaje':mensaje,
+            'bloqueo':0
+        }
+
         return redirect('/perfil/Andres')
     else:
         return render_template('calificar.html')
@@ -135,10 +172,15 @@ def admin_habitaciones():
 def agregar_habitacion():
     form = Habitaciones()
     if request.method == "POST":
+
         id_habitacion = form.id_habitacion.data
-        tipo_habitacion = form.tipo_habitacion.data
+        nombre = form.nombre.data
         descripcion = form.descripcion.data
-        return render_template('index.html')
+        precio = form.precio.data
+
+        lista_habitaciones[id_habitacion] = {'nombre':nombre, 'descripcion': descripcion, 'precio': precio, 'imagenes':['img1']}
+
+        return "Habitacion agregada"
     else:
         return render_template('agregar_habitacion.html', form=form)
 
@@ -166,18 +208,6 @@ def superadmin_gescomentario():
 @app.route('/superadmin_gesroles', methods=["GET","POST"])
 def superadmin_gesroles():
     return render_template('/SUPERADMIN/superadmin_gesroles.html')
-
-# @app.route('/quienes_somos', methods=["GET"])
-# def quienes_somos():
-#     return render_template('/RAIZ/quienes_somos.html', methods=["GET"])
-
-# @app.route('/politicas_de_privacidad', methods=["GET"])
-# def politicas_de_privacidad():
-#     return render_template('/RAIZ/politicas_de_privacidad.html')
-
-# @app.route('/terminos_y_condiciones', methods=["GET"])
-# def terminos_y_condiciones():
-#     return render_template('/RAIZ/terminos_y_condiciones.html')
 
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
