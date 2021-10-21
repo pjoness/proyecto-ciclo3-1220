@@ -42,7 +42,7 @@ def add_habitacion(nombre, descripcion, precio):
 def add_reserva(id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor):
     try :
         conn = conectar()
-        conn.execute("insert into Reservas (id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor) values (?,?,?,?,?,?,?);", (id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor))
+        conn.execute("insert into Reservas (id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor_total) values (?,?,?,?,?,?,?);", (id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor))
         conn.commit()
         conn.close()
         return True
@@ -86,6 +86,13 @@ def get_habitacion(id):
     conn = conectar()
     cursor = conn.execute("select * from Habitaciones where id = "+ str(id) +";")
     resultSet = cursor.fetchone()
+    conn.close()
+    return resultSet
+
+def get_reservas(id_usuario):
+    conn = conectar()
+    cursor = conn.execute("select * from Reservas where id_usuario = '"+ id_usuario +"';")
+    resultSet = cursor.fetchall()
     conn.close()
     return resultSet
 

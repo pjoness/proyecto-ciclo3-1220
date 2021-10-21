@@ -175,16 +175,6 @@ def crear_reserva():
         flash("Error en la reserva")
         return "<h1>Error en la reserva</h1>"
 
-    lista_reservas[codigo_reserva] = {
-    'id_user':'andres20',
-    'id_habitacion': id_habitacion,
-    'personas': personas,
-    'habitaciones': habitaciones,
-    'fecha_entrada': fecha_entrada,
-    'fecha_salida': fecha_salida,
-    'valor': precio,
-    'dias': 7}
-
     return "<p>Reserva generada para habitacion {}, personas: {}, habitaciones {}, fecha_entrada: {} y fecha_salida: {}</p>".format(id_habitacion, personas, habitaciones, fecha_entrada, fecha_salida)
 
 
@@ -194,7 +184,9 @@ def perfil(id_usuario):
     if sesion_iniciada:
         users = db.get_users()
         if id_usuario in users:
-            return render_template('perfil-cliente.html', id_usuario = id_usuario, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
+            user = db.get_user(id_usuario)
+            lista_reservas = db.get_reservas(id_usuario)
+            return render_template('perfil-cliente.html', user = user, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
         else:
             return f'usuario con codigo {id_usuario} no encontrado'
     else:
@@ -202,11 +194,17 @@ def perfil(id_usuario):
 
 @app.route('/calificar',methods=["GET","POST"])
 def calificar():
+
+    codigo = request.args.get('codigo')
+    id_usuario = request.args.get('id_usuario')
+
     if request.method == "POST":
+        codigo = request.form['codigo']
         estrellas = request.form['estrellas']
         mensaje = request.form['mensaje']
+        id_usuario = request.form['id_usuario']
 
-        comentario = db.add_comentarios(100, estrellas, mensaje, 100, 0)
+        comentario = db.add_comentarios(codigo, estrellas, mensaje, id_usuario, 0)
 
         if comentario:
             print("Comentario creado")
@@ -223,7 +221,7 @@ def calificar():
 
         return redirect('/perfil/Andres')
     else:
-        return render_template('calificar.html')
+        return render_template('calificar.html', codigo=codigo, id_usuario=id_usuario)
 
 @app.route('/admin_home', methods=["GET","POST"])
 def admin_home():

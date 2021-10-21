@@ -39,7 +39,7 @@
         <div class="form-login">
             <form method="post" action="/calificar" id="form-calificar">
                 <label for="" class="label-diferent">Estrellas</label><br>
-                <input type="checkbox" name="stars" id="1" value="1"><label for="1">1</label>
+                <input type="checkbox" name="estrellas" id="1" value="1"><label for="1">1</label>
                 <!--<input type="checkbox" name="stars" id="2" value="2"><label for="2">2</label>
                 <input type="checkbox" name="stars" id="2" value="3"><label for="3">3</label>
                 <input type="checkbox" name="stars" id="2" value="4"><label for="4">4</label>
@@ -47,6 +47,8 @@
                 <br><br>
                 <label for="" class="label-diferent">Comentarios</label><br>
                 <textarea rows="4" cols="50" form="form-calificar" class="input-diferent" name="mensaje">Ingrese sus comentarios</textarea>
+                <input type="hidden" name="codigo" value="{{codigo}}">
+                <input type="hidden" name="id_usuario" value="{{id_usuario}}">
                 <div class="btn-login">
                     <input type="submit" value="Enviar">
                 </div>
