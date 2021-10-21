@@ -95,10 +95,3 @@ def get_reservas(id_usuario):
     resultSet = cursor.fetchall()
     conn.close()
     return resultSet
-
-# result = add_user("Andres","Rodriguez","b@gmail.com","123","andres20","cliente")
-# if result:
-#     print('Instertado')
-
-# res = get_user_db(100)
-# print(res)
