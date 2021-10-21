@@ -75,9 +75,11 @@ class Usuarios(FlaskForm):
 class Habitaciones(FlaskForm):
     id_habitacion = StringField('id_habitacion', validators=[DataRequired(message='No dejar vacío, completar')])
 
-    tipo_habitacion = StringField('tipo_habitacion', validators=[DataRequired(message='No dejar vacío, completar')])
+    nombre = StringField('nombre', validators=[DataRequired(message='No dejar vacío, completar')])
 
     descripcion = TextAreaField('descripcion', validators=[DataRequired(message='No dejar vacío, completar')])
+
+    precio = StringField('precio', validators=[DataRequired(message='No dejar vacío, completar')])
 
     crear = SubmitField('crear')
     editar = SubmitField('editar')

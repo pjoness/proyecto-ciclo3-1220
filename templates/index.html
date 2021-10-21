@@ -13,10 +13,10 @@
 
 <!--MENU-->
     <header class="header-principal">
-        <li class="logotipo"><a href="/templates/index.html"><img src="/static/images/logotipo.png" alt=""></a></li>
+        <li class="logotipo"><a href="/"><img src="/static/images/logotipo.png" alt=""></a></li>
         <nav>
             <ul>
-                <li><a href="/templates/index.html">
+                <li><a href="/">
                     <!--ICONO DEL MENU-->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-menu" height="24px" viewBox="0 0 24 24" 
                     width="24px" fill="#4D4D4D"><path d="M0 0h24v24H0V0z" fill="none"/>
@@ -30,7 +30,7 @@
                             <path d="M20,10V7c0-1.1-0.9-2-2-2H6C4.9,5,4,5.9,4,7v3c-1.1,0-2,0.9-2,2v5h1.33l0.51,1.53C3.94,18.81,4.2,19,4.5,19h0 c0.3,0,0.56-0.19,0.66-0.47L5.67,17h12.67l0.51,1.53C18.94,18.81,19.2,19,19.5,19l0,0c0.3,0,0.56-0.19,0.66-0.47L20.67,17H22v-5 C22,10.9,21.1,10,20,10z M11,10H6V8c0-0.55,0.45-1,1-1h4V10z M18,10h-5V7h4c0.55,0,1,0.45,1,1V10z"/></g></g></svg>
                             Habitaciones - reservas</a></li>
                 {% if sesion_iniciada%}
-                    <li class="login"><a href="/perfil/Andres">Paul</a></li>
+                    <li class="login"><a href="/perfil/Andres">Perfil</a></li>
                     <li class="registro"><a href="/salir">Salir</a></li>
                 {% else %}
                     <li class="login"><a href="/login">Iniciar sesión</a></li>
@@ -58,16 +58,16 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
-                <select name="habitacion" id="id-habitacion" required>
+                <select name="habitaciones" id="id-habitacion" required>
                     <option value="habitacion">Habitación</option>
-                    <option value="habitacion1">Habitación 1</option>
-                    <option value="habitacion2">Habitación 2</option>
-                    <option value="habitacion3">Habitación 3</option>
-                    <option value="habitacion4">Habitación 4</option>
-                    <option value="habitacion5">Habitación5</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
-                <input type="date" required style="border-right:1px solid #4D4D4D;">
-                <input type="date" required>
+                <input type="date" name="fecha_entrada" required style="border-right:1px solid #4D4D4D;">
+                <input type="date" name="fecha_salida" required style="border-right:1px solid #4D4D4D;">
                 <input type="submit" name="" value="Buscar">
             </form>
         </div>
