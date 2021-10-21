@@ -46,7 +46,7 @@
         </div>-->
 
         <div class="culmn-de">
-        {% for key, habitacion in lista_habitaciones.items() %}
+        {% for habitacion in lista_habitaciones %}
             <div class="row-reservas">
                 <div class="culmn1">
                     <div class="centrar">
@@ -55,12 +55,12 @@
                 </div>
                 <div class="culmn2">
 
-                        <h3>{{habitacion.nombre}}</h3>
-                        <p>{{habitacion.descripcion}}</p>
-                        <p class="p-valor">${{habitacion.precio}} USD</p>
+                        <h3>{{habitacion[1]}}</h3>
+                        <p>{{habitacion[2]}}</p>
+                        <p class="p-valor">${{habitacion[3]}} USD</p>
                 </div>
                 <div class="culmn3">
-                        <a href="/habitacion/{{ key }}?personas={{buscar.personas}} &habitaciones={{buscar.habitaciones}}&fecha_entrada={{buscar.fecha_entrada}}&fecha_salida={{buscar.fecha_salida}}" class="btn-reserva">Seleccionar</a>
+                        <a href="/habitacion/{{ habitacion[0] }}?personas={{buscar.personas}} &habitaciones={{buscar.habitaciones}}&fecha_entrada={{buscar.fecha_entrada}}&fecha_salida={{buscar.fecha_salida}}" class="btn-reserva">Seleccionar</a>
                 </div>
             </div>
         {% endfor %}

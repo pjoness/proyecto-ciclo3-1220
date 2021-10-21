@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from forms import RegistroForm, LoginForm, Habitaciones
 import os
+import db
 import datetime
 
 app = Flask(__name__)
@@ -10,7 +11,7 @@ app.secret_key = os.urandom(32)
 
 
 lista_habitaciones = {
-    'id1':{'id':'id1','nombre':'Hab 1', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':100,'disponible':1, 'imagenes':['img1']},
+    1 :{'id':'id1','nombre':'Hab 1', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':100,'disponible':1, 'imagenes':['img1']},
     'id2':{'id':'id2','nombre':'Hab 2', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':200,'disponible':0, 'imagenes':['img1']},
     'id3':{'id':'id3','nombre':'Hab 3', 'descripcion':'Lorem ipsum, dolor sit amet consectetur adipisicing', 'precio':300,'disponible':1, 'imagenes':['img1']}}
 
@@ -30,10 +31,7 @@ sesion_iniciada = False
 
 @app.route('/', methods=["GET"])
 def index():
-    if request.method == "POST":
-        return render_template('zreservas.html')
-    else:
-        return render_template('index.html', sesion_iniciada=sesion_iniciada)
+    return render_template('index.html', sesion_iniciada=sesion_iniciada)
 
 @app.route('/reservas', methods=["GET","POST"])
 def reservas():
@@ -46,6 +44,8 @@ def reservas():
     date_salida = datetime.datetime.strptime(fecha_salida, "%Y-%m-%d")
 
     dias = (date_salida - date_entrada).days
+
+    lista_habitaciones = db.get_habitaciones()
 
     buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida,
     'dias':dias}
@@ -62,13 +62,23 @@ def registro():
         usuario = request.form['usuario']
         password = request.form['password']
 
-        if usuario in lista_usuarios.keys():
+        users = db.get_users()
+
+        if usuario in users:
             flash('Usuario ya existe')
             return render_template('registro.html')
         else:
             lista_usuarios[usuario] = {'nombre': nombre,'apellido':apellido,'correo':correo,'password':password}
-            
-            return redirect('/login')
+
+            registro = db.add_user(nombre, apellido, correo, password, usuario, "cliente")
+
+            if registro:
+                print("Usuario registrado")
+
+                return redirect('/login')
+            else:
+                flash("Error en el registro")
+                return render_template('registro.html')
     else:
         return render_template('registro.html')
 
@@ -80,19 +90,32 @@ def login():
         usuario = request.form['usuario']
         password = request.form['password']
 
-        if usuario in lista_usuarios.keys():
-            if password == lista_usuarios[usuario]['password'] :
+        result = db.get_user(usuario)
+
+        if result != None:
+            if usuario == result[5] and password == result[4]:
                 sesion_iniciada = True
                 return redirect('/')
             else:
-                flash("Clave Invalida")
-                return redirect("/login")
-        elif usuario in correos_admin:
-            sesion_iniciada = True
-            return render_template("admin_home.html")
+                flash("Usuario o Clave Invalidos")
+                return redirect("/login")                
         else:
-            flash("Usuario Invalido")
+            flash("Usuario no existe")
             return redirect("/login")
+
+        # if usuario in lista_usuarios.keys():
+        #     if password == lista_usuarios[usuario]['password'] :
+        #         sesion_iniciada = True
+        #         return redirect('/')
+        #     else:
+        #         flash("Clave Invalida")
+        #         return redirect("/login")
+        # elif usuario in correos_admin:
+        #     sesion_iniciada = True
+        #     return render_template("admin_home.html")
+        # else:
+        #     flash("Usuario Invalido")
+        #     return redirect("/login")
     else:
         return render_template('login.html')
 
@@ -102,10 +125,11 @@ def salir():
     sesion_iniciada = False
     return redirect('/')
 
-@app.route('/habitacion/<string:id_habitacion>', methods=["GET"])
+@app.route('/habitacion/<int:id_habitacion>', methods=["GET"])
 def habitacion(id_habitacion):
     global sesion_iniciada
-    if id_habitacion in lista_habitaciones.keys():
+    id_habitaciones = db.get_id_habitaciones()
+    if id_habitacion in id_habitaciones:
         
         personas = request.args['personas']
         habitaciones = request.args['habitaciones']
@@ -117,27 +141,39 @@ def habitacion(id_habitacion):
 
         dias = (date_salida - date_entrada).days
 
-        precio = lista_habitaciones[id_habitacion]['precio']
+        habitacion = db.get_habitacion(id_habitacion)
 
+        precio = habitacion[3]
+        
         valor = precio*dias
 
         buscar = {'personas':personas, 'habitaciones':habitaciones, 'fecha_entrada':fecha_entrada, 'fecha_salida':fecha_salida,
         'dias':dias,
         'valor':valor}
 
-        return render_template('habitaciones.html', habitacion=lista_habitaciones[id_habitacion], sesion_iniciada=sesion_iniciada, buscar=buscar, id_habitacion=id_habitacion, valor=valor)
+        return render_template('habitaciones.html', habitacion=habitacion, sesion_iniciada=sesion_iniciada, buscar=buscar, id_habitacion=id_habitacion, valor=valor)
     else:
         return f'habitacion con codigo {id_habitacion} no encontrada'
 
 @app.route('/crear_reserva', methods=["POST"])
 def crear_reserva():
     codigo_reserva = "123"
+    id_usuario = "andres20"
     id_habitacion = request.form['id_habitacion']
     personas = request.form['personas']
     habitaciones = request.form['habitaciones']
     fecha_entrada = request.form['fecha_entrada']
     fecha_salida = request.form['fecha_salida']
-    precio = request.form['precio']
+    dias = request.form['dias']
+    valor = request.form['valor']
+
+    reserva = db.add_reserva(id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor)
+
+    if reserva:
+        return "<p>Reserva generada para habitacion {}, personas: {}, habitaciones {}, fecha_entrada: {} y fecha_salida: {}</p>".format(id_habitacion, personas, habitaciones, fecha_entrada, fecha_salida)
+    else:
+        flash("Error en la reserva")
+        return "<h1>Error en la reserva</h1>"
 
     lista_reservas[codigo_reserva] = {
     'id_user':'andres20',
@@ -156,7 +192,8 @@ def crear_reserva():
 def perfil(id_usuario):
     global sesion_iniciada
     if sesion_iniciada:
-        if id_usuario in lista_usuarios.keys():
+        users = db.get_users()
+        if id_usuario in users:
             return render_template('perfil-cliente.html', id_usuario = id_usuario, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
         else:
             return f'usuario con codigo {id_usuario} no encontrado'
@@ -168,6 +205,15 @@ def calificar():
     if request.method == "POST":
         estrellas = request.form['estrellas']
         mensaje = request.form['mensaje']
+
+        comentario = db.add_comentarios(100, estrellas, mensaje, 100, 0)
+
+        if comentario:
+            print("Comentario creado")
+            return redirect('/perfil/andres20')
+        else:
+            print("Error en comentario")
+            return render_template('calificar.html')
 
         comentarios['id_comentario'] = {
             'estrellas':estrellas,
@@ -200,6 +246,14 @@ def agregar_habitacion():
         nombre = form.nombre.data
         descripcion = form.descripcion.data
         precio = form.precio.data
+
+        result = db.add_habitacion(nombre, descripcion, precio)
+
+        if result:
+            print("Habitacion registrada")
+            return render_template('agregar_habitacion.html', form=form)
+        else:
+            return "<h1>Fallo registro de habitacion</h1>"
 
         lista_habitaciones[id_habitacion] = {'nombre':nombre, 'descripcion': descripcion, 'precio': precio, 'imagenes':['img1']}
 
