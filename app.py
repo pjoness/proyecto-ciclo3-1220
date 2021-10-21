@@ -169,6 +169,8 @@ def crear_reserva():
 
     reserva = db.add_reserva(id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor)
 
+    detalle = db.add_detalle(codigo_reserva,id_habitacion, valor)
+
     if reserva:
         return "<p>Reserva generada para habitacion {}, personas: {}, habitaciones {}, fecha_entrada: {} y fecha_salida: {}</p>".format(id_habitacion, personas, habitaciones, fecha_entrada, fecha_salida)
     else:

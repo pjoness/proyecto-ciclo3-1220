@@ -49,6 +49,16 @@ def add_reserva(id_usuario, personas, habitaciones, fecha_entrada, fecha_salida,
     except Error:
         return False
 
+def add_detalle(id_habitacion, valor):
+    try :
+        conn = conectar()
+        conn.execute("insert into DetalleReserva (id_habitacion, valor) values (?,?);", (id_habitacion, valor))
+        conn.commit()
+        conn.close()
+        return True
+    except Error:
+        return False
+
 def add_comentarios(codigo, calificacion, mensaje, id_usuario, bloqueo=0):
     try :
         conn = conectar()
