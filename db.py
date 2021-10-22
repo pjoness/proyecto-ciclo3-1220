@@ -28,10 +28,10 @@ def add_user(nombre, apellido, correo, passw, usuario, rol):
     except Error:
         return False
 
-def add_habitacion(nombre, descripcion, precio):
+def add_habitacion(nombre, descripcion, precio, ocupada=0):
     try :
         conn = conectar()
-        conn.execute("insert into Habitaciones (nombre, descripcion, precio) values (?,?,?);", (nombre, descripcion, precio))
+        conn.execute("insert into Habitaciones (nombre, descripcion, precio, ocupada) values (?,?,?,?);", (nombre, descripcion, precio, ocupada))
         conn.commit()
         conn.close()
         return True
@@ -52,7 +52,7 @@ def add_reserva(id_usuario, personas, habitaciones, fecha_entrada, fecha_salida,
 def add_detalle(id_habitacion, valor):
     try :
         conn = conectar()
-        conn.execute("insert into DetalleReserva (id_habitacion, valor) values (?,?);", (id_habitacion, valor))
+        conn.execute("insert into DetallesReserva (id_habitacion, valor) values (?,?);", (id_habitacion, valor))
         conn.commit()
         conn.close()
         return True
@@ -105,3 +105,20 @@ def get_reservas(id_usuario):
     resultSet = cursor.fetchall()
     conn.close()
     return resultSet
+
+def cancelar_reserva(codigo):
+    conn = conectar()
+    cursor = conn.execute("delete from Reservas where codigo = '"+ codigo +"';")
+    resultSet = cursor.fetchall()
+    conn.close()
+    return resultSet
+
+def get_detalle(codigo):
+    try :
+        conn = conectar()
+        conn.execute("select * from DetallesReserva where codigo = " + codigo + ";")
+        conn.commit()
+        conn.close()
+        return True
+    except Error:
+        return False

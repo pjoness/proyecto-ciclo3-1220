@@ -102,20 +102,6 @@ def login():
         else:
             flash("Usuario no existe")
             return redirect("/login")
-
-        # if usuario in lista_usuarios.keys():
-        #     if password == lista_usuarios[usuario]['password'] :
-        #         sesion_iniciada = True
-        #         return redirect('/')
-        #     else:
-        #         flash("Clave Invalida")
-        #         return redirect("/login")
-        # elif usuario in correos_admin:
-        #     sesion_iniciada = True
-        #     return render_template("admin_home.html")
-        # else:
-        #     flash("Usuario Invalido")
-        #     return redirect("/login")
     else:
         return render_template('login.html')
 
@@ -157,7 +143,6 @@ def habitacion(id_habitacion):
 
 @app.route('/crear_reserva', methods=["POST"])
 def crear_reserva():
-    codigo_reserva = "123"
     id_usuario = "andres20"
     id_habitacion = request.form['id_habitacion']
     personas = request.form['personas']
@@ -169,7 +154,7 @@ def crear_reserva():
 
     reserva = db.add_reserva(id_usuario, personas, habitaciones, fecha_entrada, fecha_salida, dias, valor)
 
-    detalle = db.add_detalle(codigo_reserva,id_habitacion, valor)
+    detalle = db.add_detalle(id_habitacion, valor)
 
     if reserva:
         return "<p>Reserva generada para habitacion {}, personas: {}, habitaciones {}, fecha_entrada: {} y fecha_salida: {}</p>".format(id_habitacion, personas, habitaciones, fecha_entrada, fecha_salida)
