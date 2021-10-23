@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from forms import RegistroForm, LoginForm, Habitaciones
+from flask_bcrypt import Bcrypt
 import os
 import db
 import datetime
@@ -8,6 +9,8 @@ import datetime
 app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
+
+bcrypt = Bcrypt(app)
 
 
 lista_habitaciones = {
@@ -70,7 +73,9 @@ def registro():
         else:
             lista_usuarios[usuario] = {'nombre': nombre,'apellido':apellido,'correo':correo,'password':password}
 
-            registro = db.add_user(nombre, apellido, correo, password, usuario, "cliente")
+            pw_hash = bcrypt.generate_password_hash(password)
+
+            registro = db.add_user(nombre, apellido, correo, pw_hash, usuario, "cliente")
 
             if registro:
                 print("Usuario registrado")
@@ -92,8 +97,10 @@ def login():
 
         result = db.get_user(usuario)
 
+        isPassword =  bcrypt.check_password_hash(result[4],password)
+
         if result != None:
-            if usuario == result[5] and password == result[4]:
+            if usuario == result[5] and isPassword:
                 sesion_iniciada = True
                 return redirect('/')
             else:
@@ -212,7 +219,7 @@ def calificar():
 
 @app.route('/admin_home', methods=["GET","POST"])
 def admin_home():
-    return render_template('/ADMIN/admin_profile.html')
+    return render_template('perfil-administrador.html')
 
 @app.route('/admin_usuarios', methods=["GET","POST"])
 def admin_usuarios():

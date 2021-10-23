@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    color:#4D4D4D;
+}
+/*submenu del menu del perfil de cliente*/
+.header-principal nav li{
+    position: relative;
+}
+
+/*section donde divido las columnas*/
+section{
+    position:relative;
+    width: 100%;
+    height:100% !important;
+    background-color: red !important;
+}
+section .culmn-iz{
+    position: fixed;
+    top:0;
+    width: 30%;
+    height:100% ;
+    float:left;
+    text-align: center;
+    border-right:6px solid #E6E6E6 ;
+}
+section .culmn-iz img{
+    margin-top:200px;
+    width: 120px;
+}
+.culmn-iz .opciones-admin{
+    height: auto;
+    margin:50px 0;
+}
+.culmn-iz .opciones-admin li{
+    width: 100%;
+    margin:15px 0;
+}
+.culmn-iz .opciones-admin li button{
+    margin:0 auto;
+    text-decoration: none;
+    background-color: #0071BC;
+    color:#fff;
+    padding: 10px 5px;
+    border-radius: 10px;
+    border:none;
+    width: 230px;
+    display: block;
+    transition: all .5s;
+    cursor: pointer;
+}
+.culmn-iz .opciones-admin li button:hover{
+    background-color:#0099DD;
+}
+
+/*parte derecha*/
+section .culmn-de{
+    position: relative;
+    width: 70%;
+    height: 100vh;
+    float:right;
+}
+.tabPanel{
+    width: 100%;
+    height: 100vh;
+    background-color: #fff !important;
+}
+.tabPanel h3{
+    color:#0071BC;
+    margin:50px 0;
+    text-align: center;
+    font-size: 24px;
+}
+.box{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: auto;
+}
+.form-filtro{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.form-filtro .filtro{
+    width: 100%;
+    padding:15px 20px;
+    border:none;
+    border-radius: 10px;
+    outline: none;
+    background: #EAEAEA;
+}
+.form-filtro .btn-buscar{
+    position: absolute;
+    right: 0;
+    width: 100px;
+    padding:15px 20px;
+    border:none;
+    border-radius: 0 10px 10px 0;
+    display: inline-block;
+    background-color: #0071BC;
+    color:#fff;
+    cursor:pointer;
+    transition: all .5s;
+}
+.form-filtro .btn-buscar:hover{
+    background-color: #0099DD;
+}
+table{
+    margin-top:80px;
+    width: 100%;
+    border-collapse:collapse;
+    min-width: 600px !important;
+
+}
+table tr td{
+    border:2px solid #0071BC;
+    padding:10px;
+    font-size: 14px;
+}
+.actualizar{
+    color:#0071BC;
+}
+.eliminar{
+    color:#D81A1A;
+}
