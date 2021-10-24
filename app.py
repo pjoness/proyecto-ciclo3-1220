@@ -225,9 +225,10 @@ def admin_home():
 def admin_usuarios():
     return render_template('/ADMIN/admin_gesuser.html')
 
-@app.route('/admin_habitaciones', methods=["GET","POST"])
+@app.route('/admin_habitaciones', methods=["GET"])
 def admin_habitaciones():
-    return render_template('/ADMIN/admin_geshabitacion.html')
+    habitaciones = db.get_habitaciones()
+    return render_template('administrador-habitaciones.html', habitaciones=habitaciones)
 
 @app.route('/agregar_habitacion', methods=["GET","POST"])
 def agregar_habitacion():
@@ -252,6 +253,42 @@ def agregar_habitacion():
         return "Habitacion agregada"
     else:
         return render_template('agregar_habitacion.html', form=form)
+
+@app.route('/editar_habitacion/<int:id>', methods=["GET","POST"])
+def editar_habitacion(id):
+    habitacion = db.get_habitacion(id)
+
+    form = Habitaciones()
+
+    form.id_habitacion.data = habitacion[0]
+    form.nombre.data = habitacion[1]
+    form.descripcion.data = habitacion[2]
+    form.precio.data = habitacion[3]
+
+    if request.method == "POST":
+        id = request.form['id_habitacion']
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        precio = request.form['precio']
+
+        editar = db.editar_habitacion(id,nombre,descripcion,precio)
+        
+        if editar:
+            flash('Habitacion Editada')
+            return redirect(url_for('admin_habitaciones'))
+        else:
+            return "Error"
+    else:
+        return render_template('editar_habitacion.html', form=form, id=id)
+
+@app.route('/eliminar_habitacion/<int:id>', methods=["POST"])
+def eliminar_habitacion(id):
+    eliminar = db.eliminar_habitacion(id)
+    if eliminar:
+        flash('Habitacion Eliminada')
+    else:
+        flash('Error')
+    return redirect(url_for('admin_habitaciones'))
 
 @app.route('/admin_comentarios', methods=["GET","POST"])
 def admin_comentarios():

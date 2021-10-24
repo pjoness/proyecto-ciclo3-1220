@@ -122,3 +122,17 @@ def get_detalle(codigo):
         return True
     except Error:
         return False
+
+def editar_habitacion(id,nombre,descripcion,precio):
+    conn = conectar()
+    cursor = conn.execute("update Habitaciones set nombre=?, descripcion=?, precio=? where id = ?;", (nombre,descripcion,precio,id))
+    conn.commit()
+    conn.close()
+    return True
+
+def eliminar_habitacion(id):
+    conn = conectar()
+    cursor = conn.execute("delete from Habitaciones where id = "+ str(id) +";")
+    conn.commit()
+    conn.close()
+    return True
