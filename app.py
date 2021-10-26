@@ -1,14 +1,27 @@
 from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from forms import RegistroForm, LoginForm, Habitaciones
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 import os
 import db
+from users import User
 import datetime
 
 app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
+
+login_manager = LoginManager()
+
+login_manager.init_app(app)
+
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(id_usuario):
+    user = db.get_user_by_id(id_usuario)
+    return User(id_usuario, user[1], user[2], user[3], user[4], user[5])
 
 bcrypt = Bcrypt(app)
 
@@ -89,19 +102,28 @@ def registro():
 
 @app.route('/login', methods=["GET","POST"])
 def login():
-    # form = LoginForm()
+    if current_user.is_authenticated:
+        return redirect('/')
+    
+    form = LoginForm()
     global sesion_iniciada
     if request.method == "POST":
-        usuario = request.form['usuario']
-        password = request.form['password']
+        # usuario = request.form['usuario']
+        # password = request.form['password']
+
+        usuario = form.usuario.data
+        password = form.password.data
 
         result = db.get_user(usuario)
 
         isPassword =  bcrypt.check_password_hash(result[4],password)
 
-        if result != None:
+        if result:
+            user = User(int(result[0]), result[1], result[2], result[3], result[4], result[5])
+
             if usuario == result[5] and isPassword:
                 sesion_iniciada = True
+                login_user(user, remember = True)
                 return redirect('/')
             else:
                 flash("Usuario o Clave Invalidos")
@@ -110,7 +132,7 @@ def login():
             flash("Usuario no existe")
             return redirect("/login")
     else:
-        return render_template('login.html')
+        return render_template('login.html', form=form)
 
 @app.route('/salir', methods=["GET"])
 def salir():
@@ -149,6 +171,7 @@ def habitacion(id_habitacion):
         return f'habitacion con codigo {id_habitacion} no encontrada'
 
 @app.route('/crear_reserva', methods=["POST"])
+@login_required
 def crear_reserva():
     id_usuario = "andres20"
     id_habitacion = request.form['id_habitacion']
@@ -173,20 +196,27 @@ def crear_reserva():
 
 
 @app.route('/perfil/<string:id_usuario>', methods=["GET"])
+@login_required
 def perfil(id_usuario):
     global sesion_iniciada
     if sesion_iniciada:
         users = db.get_users()
         if id_usuario in users:
-            user = db.get_user(id_usuario)
+            usuario = db.get_user(id_usuario)
             lista_reservas = db.get_reservas(id_usuario)
-            return render_template('perfil-cliente.html', user = user, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
+            return render_template('perfil-cliente.html', usuario = usuario, lista_reservas=lista_reservas, sesion_iniciada=sesion_iniciada)
         else:
             return f'usuario con codigo {id_usuario} no encontrado'
     else:
         return redirect('/login')
 
+@app.route('/prueba', methods=["GET"])
+def prueba():
+    return current_user.to_json()
+
+
 @app.route('/calificar',methods=["GET","POST"])
+# @login_required
 def calificar():
 
     codigo = request.args.get('codigo')
@@ -218,6 +248,7 @@ def calificar():
         return render_template('calificar.html', codigo=codigo, id_usuario=id_usuario)
 
 @app.route('/admin_home', methods=["GET","POST"])
+# @login_required
 def admin_home():
     return render_template('perfil-administrador.html')
 
@@ -225,11 +256,14 @@ def admin_home():
 def admin_usuarios():
     return render_template('/ADMIN/admin_gesuser.html')
 
-@app.route('/admin_habitaciones', methods=["GET","POST"])
+@app.route('/admin_habitaciones', methods=["GET"])
+# @login_required
 def admin_habitaciones():
-    return render_template('/ADMIN/admin_geshabitacion.html')
+    habitaciones = db.get_habitaciones()
+    return render_template('administrador-habitaciones.html', habitaciones=habitaciones)
 
 @app.route('/agregar_habitacion', methods=["GET","POST"])
+# @login_required
 def agregar_habitacion():
     form = Habitaciones()
     if request.method == "POST":
@@ -252,6 +286,43 @@ def agregar_habitacion():
         return "Habitacion agregada"
     else:
         return render_template('agregar_habitacion.html', form=form)
+
+@app.route('/editar_habitacion/<int:id>', methods=["GET","POST"])
+# @login_required
+def editar_habitacion(id):
+    habitacion = db.get_habitacion(id)
+
+    form = Habitaciones()
+
+    form.id_habitacion.data = habitacion[0]
+    form.nombre.data = habitacion[1]
+    form.descripcion.data = habitacion[2]
+    form.precio.data = habitacion[3]
+
+    if request.method == "POST":
+        id = request.form['id_habitacion']
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        precio = request.form['precio']
+
+        editar = db.editar_habitacion(id,nombre,descripcion,precio)
+        
+        if editar:
+            flash('Habitacion Editada')
+            return redirect(url_for('admin_habitaciones'))
+        else:
+            return "Error"
+    else:
+        return render_template('editar_habitacion.html', form=form, id=id)
+
+@app.route('/eliminar_habitacion/<int:id>', methods=["POST"])
+def eliminar_habitacion(id):
+    eliminar = db.eliminar_habitacion(id)
+    if eliminar:
+        flash('Habitacion Eliminada')
+    else:
+        flash('Error')
+    return redirect(url_for('admin_habitaciones'))
 
 @app.route('/admin_comentarios', methods=["GET","POST"])
 def admin_comentarios():

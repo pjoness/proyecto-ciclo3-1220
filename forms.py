@@ -16,11 +16,13 @@ class RegistroForm(FlaskForm):
     crear_cuenta = SubmitField('crear_cuenta')
 
 class LoginForm(FlaskForm):
-    correo = StringField('correo', validators=[DataRequired(message='No dejar vacío, completar')])
+    usuario = StringField('Usuario', validators=[DataRequired(message='No dejar vacío, completar')])
     
-    contraseña = PasswordField('contraseña', validators=[DataRequired(message='No dejar vacío, completar')])
+    password = PasswordField('Contraseña', validators=[DataRequired(message='No dejar vacío, completar')])
 
-    iniciar_sesion = SubmitField('iniciar_sesion')
+    remember_me = BooleanField('Recordar Usuario')
+
+    iniciar_sesion = SubmitField('Iniciar Sesion')
 
 class BuscarForm(FlaskForm):
     personas = StringField('personas', DataRequired())

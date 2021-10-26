@@ -42,13 +42,28 @@
 
         <div class="form-login">
             <form method="post" action="/login">
-                <label for="" class="label-diferent">Usuario</label>
+            {{ form.hidden_tag() }}
+                <!--<label for="" class="label-diferent">Usuario</label>
                 <input type="text" name="usuario" id="correo" class="input-diferent" required><br><br>
                 <label for="" class="label-diferent">Contraseña</label><br>
-                <input type="password" class="input-diferent" name="password" id = "password" required>
-
+                <input type="password" class="input-diferent" name="password" id = "password" required>-->
+                <div class="label-diferent">
+                {{ form.usuario.label }}
+                {{ form.usuario() }}
+                </div>
+                <br>
+                <div class="label-diferent">
+                {{ form.password.label}}
+                {{ form.password() }}
+                </div>
+                <br>
+                <div class="label-diferent">
+                    {{ form.remember_me.label }}
+                    {{ form.remember_me() }}
+                </div>
+                <br>
                 <div class="btn-login">
-                    <input type="submit" value="Iniciar Sesion">
+                    {{ form.iniciar_sesion()}}
                 </div>
             </form>
         </div>
