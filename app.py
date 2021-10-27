@@ -256,8 +256,12 @@ def admin_home():
 def admin_usuarios():
     return render_template('/ADMIN/admin_gesuser.html')
 
+<<<<<<< HEAD
 @app.route('/admin_habitaciones', methods=["GET"])
 # @login_required
+=======
+@app.route('/admin_habitaciones', methods=["GET"])
+>>>>>>> origin/main
 def admin_habitaciones():
     habitaciones = db.get_habitaciones()
     return render_template('administrador-habitaciones.html', habitaciones=habitaciones)
@@ -288,7 +292,10 @@ def agregar_habitacion():
         return render_template('agregar_habitacion.html', form=form)
 
 @app.route('/editar_habitacion/<int:id>', methods=["GET","POST"])
+<<<<<<< HEAD
 # @login_required
+=======
+>>>>>>> origin/main
 def editar_habitacion(id):
     habitacion = db.get_habitacion(id)
 
