@@ -47,7 +47,7 @@
 
         <div class="culmn-de">
         {% for reserva in lista_reservas %}
-        {% if reserva[1] == user[5] %}
+        {% if reserva[1] == current_user.usuario %}
             <div class="row-reservas">
                 <div class="culmn1">
                     <div class="centrar">
@@ -67,7 +67,7 @@
 
                         <a href="" class="btn-reserva">Ver reserva</a>
                         <a href="" class="btn-cancelar">Cancelar reserva</a>
-                        <a href="/calificar?codigo={{reserva[0]}}&id_usuario={{user[5]}}" class="btn-calificar">Calificar</a>
+                        <a href="/calificar?codigo={{reserva[0]}}&id_usuario={{current_user.usuario}}" class="btn-calificar">Calificar</a>
   
                 </div>
             </div>

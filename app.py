@@ -173,7 +173,7 @@ def habitacion(id_habitacion):
 @app.route('/crear_reserva', methods=["POST"])
 @login_required
 def crear_reserva():
-    id_usuario = "andres20"
+    id_usuario = current_user.usuario
     id_habitacion = request.form['id_habitacion']
     personas = request.form['personas']
     habitaciones = request.form['habitaciones']
